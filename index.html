@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>স্মার্ট স্কুল ভর্তি পোর্টাল | Smart Admission System</title>
+    <title>ভর্তি পরীক্ষা - ২০২৭ | ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         :root {
-            --bg-light: #f8fafc;
+            --bg-light: #f1f5f9;
             --bg-card: #ffffff;
-            --bg-input: #f1f5f9;
+            --bg-input: #f8fafc;
             --primary: #dc2626;
             --primary-hover: #b91c1c;
+            --royal-blue: #1e3a8a;
             --accent: #2563eb;
+            --gold: #f59e0b;
             --success: #10b981;
-            --warning: #f59e0b;
             --danger: #ef4444;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+            --text-main: #0f172a;
+            --text-muted: #475569;
             --border-color: #cbd5e1;
         }
 
@@ -33,15 +34,241 @@
         body {
             background-color: var(--bg-light);
             color: var(--text-main);
-            display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar Navigation */
+        /* ================= HERO LANDING PAGE (PUBLIC VIEW) ================= */
+        #public-landing {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.90) 0%, rgba(30, 58, 138, 0.82) 50%, rgba(153, 27, 27, 0.85) 100%),
+                        url('school.jpg') center/cover no-repeat fixed;
+            color: #ffffff;
+        }
+
+        body.admin-logged-in #public-landing {
+            display: none !important;
+        }
+
+        .landing-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-brand-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 17px;
+            color: #fff;
+        }
+
+        .nav-brand-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            padding: 2px;
+            object-fit: cover;
+        }
+
+        .hero-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .school-logo-frame {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #ffffff;
+            padding: 5px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 0 6px rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+            animation: floatLogo 4s ease-in-out infinite;
+        }
+
+        .school-logo-frame img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .estd-pill {
+            background: rgba(245, 158, 11, 0.25);
+            border: 1px solid rgba(251, 191, 36, 0.6);
+            color: #fde68a;
+            padding: 5px 18px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .hero-school-title {
+            font-size: clamp(28px, 4.5vw, 46px);
+            font-weight: 700;
+            line-height: 1.25;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 6px;
+        }
+
+        .hero-address {
+            font-size: clamp(15px, 2vw, 18px);
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .notice-countdown-box {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 18px 25px;
+            margin-bottom: 25px;
+            max-width: 820px;
+            width: 100%;
+            backdrop-filter: blur(8px);
+        }
+
+        .notice-text {
+            font-size: 14.5px;
+            color: #f8fafc;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .notice-text b { color: #fde68a; }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .countdown-item {
+            background: rgba(220, 38, 38, 0.3);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-hero-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            border: none;
+            padding: 15px 34px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            transition: 0.25s;
+        }
+
+        .btn-hero-primary:hover { transform: translateY(-3px); }
+
+        .btn-hero-admin {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 15px 28px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.25s;
+        }
+
+        .btn-hero-admin:hover { background: #fff; color: var(--royal-blue); }
+
+        #public-form-wrapper {
+            display: none;
+            background: #f8fafc;
+            color: var(--text-main);
+            padding: 40px 20px 60px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        #public-form-wrapper.open { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-container-box {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .landing-footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.8);
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        /* ================= ADMIN WORKSPACE ================= */
+        #admin-workspace {
+            display: none;
+            min-height: 100vh;
+        }
+
+        body.admin-logged-in #admin-workspace { display: flex; }
+
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-            border-right: 1px solid var(--border-color);
+            width: 265px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             padding: 20px 15px;
             display: flex;
             flex-direction: column;
@@ -54,45 +281,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-bottom: 20px;
+            padding-bottom: 18px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 20px;
         }
 
-        .brand-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--primary), #ef4444);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            flex-shrink: 0;
-        }
+        .brand img { width: 42px; height: 42px; border-radius: 50%; background: #fff; padding: 2px; }
+        .brand-text h2 { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
+        .brand-text span { font-size: 12px; color: #fca5a5; }
 
-        .brand-text h2 {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #fff;
-        }
-
-        .brand-text span {
-            font-size: 12px;
-            color: #fca5a5;
-        }
-
-        .nav-menu {
-            list-style: none;
-            flex: 1;
-        }
-
-        .nav-item {
-            margin-bottom: 8px;
-        }
-
+        .nav-menu { list-style: none; flex: 1; }
+        .nav-item { margin-bottom: 8px; }
         .nav-link {
             display: flex;
             align-items: center;
@@ -100,31 +299,19 @@
             padding: 12px 15px;
             border-radius: 10px;
             color: #cbd5e1;
-            text-decoration: none;
             font-weight: 500;
             font-size: 15px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: 0.2s;
         }
+        .nav-link:hover, .nav-link.active { background: rgba(220, 38, 38, 0.2); color: #fff; border-left: 3px solid var(--primary); }
+        .nav-link i { width: 20px; text-align: center; }
 
-        .nav-link:hover, .nav-link.active {
-            background: rgba(220, 38, 38, 0.15);
-            color: #fff;
-            border-left: 3px solid var(--primary);
-        }
-
-        .nav-link i {
-            width: 20px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
+        .admin-main {
+            margin-left: 265px;
             flex: 1;
             padding: 25px 30px;
-            max-width: calc(100vw - 260px);
+            max-width: calc(100vw - 265px);
         }
 
         .topbar {
@@ -132,46 +319,15 @@
             justify-content: space-between;
             align-items: center;
             background: var(--bg-card);
-            padding: 15px 25px;
+            padding: 16px 25px;
             border-radius: 14px;
             border: 1px solid var(--border-color);
             margin-bottom: 25px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
 
-        .school-header h1 {
-            font-size: 22px;
-            color: var(--text-main);
-        }
-
-        .school-header p {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .badge-session {
-            background: rgba(220, 38, 38, 0.1);
-            color: var(--primary);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid rgba(220, 38, 38, 0.2);
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .section { display: none; }
+        .section.active { display: block; }
 
         .stats-grid {
             display: grid;
@@ -188,708 +344,474 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
+        .stat-info h3 { font-size: 26px; font-weight: 700; margin-top: 5px; }
+        .stat-info p { color: var(--text-muted); font-size: 14px; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
 
-        .stat-info h3 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-top: 5px;
-            color: var(--text-main);
-        }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; margin-bottom: 25px; }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
 
-        .stat-info p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: span 2; }
+        label { font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+        input, select { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px 14px; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus, select:focus { border-color: var(--primary); background: #fff; }
 
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-main);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        /* OCR Scanner Box */
-        .scanner-container {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 25px;
-        }
-
-        .upload-zone {
-            border: 2px dashed var(--primary);
-            background: rgba(220, 38, 38, 0.03);
-            border-radius: 14px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 320px;
-            position: relative;
-        }
-
-        .upload-zone:hover {
-            background: rgba(220, 38, 38, 0.08);
-        }
-
-        .upload-zone i {
-            font-size: 42px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        #preview-img {
-            max-width: 100%;
-            max-height: 280px;
-            border-radius: 8px;
-            display: none;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full {
-            grid-column: span 2;
-        }
-
-        label {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
-
-        input, select, textarea {
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border 0.2s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-        }
-
-        .btn {
-            padding: 10px 18px;
-            border-radius: 8px;
-            border: none;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-            color: white;
-        }
-
+        .btn { padding: 10px 18px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; color: white; transition: 0.2s; }
         .btn-primary { background: var(--primary); }
         .btn-primary:hover { background: var(--primary-hover); }
         .btn-success { background: var(--success); }
         .btn-success:hover { background: #059669; }
         .btn-accent { background: var(--accent); }
-        .btn-accent:hover { background: #1d4ed8; }
-        .btn-warning { background: var(--warning); color: #000; }
+        .btn-warning { background: var(--gold); color: #000; }
         .btn-danger { background: var(--danger); }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-        }
-        .btn-outline:hover { background: var(--bg-input); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
 
-        .table-responsive {
-            overflow-x: auto;
-        }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        th { background: var(--bg-input); color: var(--primary); font-weight: 700; }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        th {
-            background: var(--bg-input);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background: rgba(0, 0, 0, 0.01);
-        }
-
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
+        .status-badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
         .status-pass { background: rgba(16, 185, 129, 0.15); color: #059669; }
         .status-fail { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
         .status-pending { background: rgba(245, 158, 11, 0.15); color: #d97706; }
 
-        .loader-box {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            background: rgba(220, 38, 38, 0.1);
-            border: 1px solid var(--primary);
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-top: 12px;
-            color: var(--primary);
-            font-size: 14px;
-        }
+        /* Login Modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(5px); z-index: 999; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.show { display: flex; }
+        .login-box { background: #fff; width: 100%; max-width: 400px; border-radius: 18px; padding: 32px; text-align: center; }
 
-        .spinner {
-            width: 18px;
-            height: 18px;
-            border: 3px solid rgba(220, 38, 38, 0.3);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ================= PRINT STYLES (A4 DOCUMENT) ================= */
-        #print-area {
-            display: none;
-        }
-
+        /* ================= PRINT STYLES (EXACT ONE-PAGE A4 FIT, NO EXTRA SPACE) ================= */
+        #print-area { display: none; }
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 10mm;
-            }
-            body {
-                background: #fff !important;
-                color: #000 !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-            .sidebar, .main-content, .no-print {
-                display: none !important;
-            }
-            #print-area {
-                display: block !important;
-                width: 100%;
-                background: #fff;
-                color: #000;
-            }
+            @page { size: A4 portrait; margin: 6mm; }
+            body { background: #fff !important; color: #000 !important; display: block !important; }
+            #public-landing, #admin-workspace, .modal-overlay, .no-print { display: none !important; }
+            #print-area { display: block !important; width: 100%; background: #fff; color: #000; font-size: 11px; }
 
-            /* A4 Half-Page Admit Card (2 per A4 Page) */
-            .admit-card {
-                border: 2px solid #000;
-                padding: 18px 22px;
-                height: 132mm;
-                margin-bottom: 10mm;
-                page-break-inside: avoid;
+            .print-admission-page {
+                width: 100%;
+                height: 285mm;
+                max-height: 285mm;
+                page-break-after: always;
+                box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
-                box-sizing: border-box;
+                justify-content: flex-start;
+                border: 1.5px solid #000;
+                padding: 8px 12px;
                 position: relative;
+                overflow: hidden;
             }
-            .admit-card:nth-child(2n) {
-                margin-bottom: 0;
-                page-break-after: always;
-            }
-            .admit-header {
+            .print-admission-page:last-child { page-break-after: avoid; }
+
+            .print-school-header {
                 text-align: center;
                 border-bottom: 2px solid #000;
-                padding-bottom: 8px;
+                padding-bottom: 3px;
+                position: relative;
+                margin-bottom: 6px;
             }
-            .admit-header h2 {
-                font-size: 22px;
-                font-weight: 700;
-                margin-bottom: 2px;
-            }
-            .admit-header .sub-info {
-                font-size: 13px;
-                margin-bottom: 4px;
-            }
-            .admit-exam-year {
-                font-size: 15px;
-                font-weight: 700;
-                margin-top: 2px;
-            }
-            .admit-badge {
+            .print-school-header img { width: 40px; height: 40px; position: absolute; left: 6px; top: 1px; object-fit: contain; }
+            .print-school-header h1 { font-size: 16px; font-weight: 700; margin-bottom: 1px; }
+            .print-school-header p { font-size: 10px; }
+            .print-form-title {
                 display: inline-block;
                 background: #000 !important;
                 color: #fff !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-                padding: 2px 22px;
-                font-size: 16px;
+                padding: 1px 12px;
+                font-size: 11.5px;
                 font-weight: 700;
-                border-radius: 4px;
-                margin-top: 4px;
-                letter-spacing: 1px;
+                border-radius: 2px;
+                margin-top: 2px;
             }
-            .admit-body {
+
+            .print-grid-row { display: flex; gap: 5px; margin-bottom: 3.5px; align-items: center; }
+            .print-field { border-bottom: 1px dotted #000; flex: 1; padding-bottom: 1px; font-weight: 600; min-height: 16px; }
+            .print-label { font-weight: 600; white-space: nowrap; }
+
+            .instructions-box {
+                font-size: 9.5px;
+                border: 1px solid #000;
+                padding: 4px 6px;
+                margin-top: 6px;
+                background: #fdfdfd;
+                line-height: 1.35;
+            }
+
+            .declaration-box {
+                font-size: 9px;
+                border: 1px solid #000;
+                padding: 4px 6px;
+                margin-top: 6px;
                 display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                margin-top: 12px;
-                flex: 1;
+                gap: 6px;
+                line-height: 1.3;
             }
-            .admit-details {
-                flex: 1;
-                padding-right: 15px;
-            }
-            .admit-row {
-                display: flex;
-                align-items: center;
-                margin-bottom: 9px;
-                font-size: 14.5px;
-            }
-            .admit-roll-box {
-                font-size: 18px;
-                font-weight: 800;
-                border: 2px solid #000;
-                padding: 1px 14px;
-                margin: 0 20px 0 8px;
-                display: inline-block;
-            }
-            .admit-date-box {
-                margin-top: 10px;
-                padding-top: 8px;
-                border-top: 1px dashed #666;
-                font-size: 14px;
-                display: flex;
-                gap: 20px;
-            }
-            .photo-box {
-                width: 105px;
-                height: 125px;
-                border: 1.5px solid #000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                font-size: 12px;
-                flex-shrink: 0;
-            }
-            .admit-footer {
+
+            .signature-area {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 25px;
-                font-size: 13.5px;
+                font-size: 10.5px;
             }
-            .sign-line {
-                border-top: 1.5px solid #000;
-                width: 180px;
-                text-align: center;
-                padding-top: 4px;
-                font-weight: 600;
-            }
+            .sign-line { border-top: 1px solid #000; width: 170px; text-align: center; padding-top: 3px; font-weight: 600; }
 
-            /* Seat Label Grid */
-            .seat-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 14px;
-            }
-            .seat-box {
-                border: 2px dashed #000;
-                padding: 14px;
-                text-align: center;
-                page-break-inside: avoid;
-            }
-            .seat-exam-title {
-                font-size: 15px;
-                font-weight: 700;
-            }
-            .seat-class {
-                font-size: 14px;
-                margin: 3px 0;
-                font-weight: 600;
-            }
-            .seat-roll {
-                font-size: 28px;
-                font-weight: 800;
-                border: 2px solid #000;
-                display: inline-block;
-                padding: 2px 24px;
-                margin: 6px 0;
-            }
-            .seat-name {
-                font-size: 16px;
-                font-weight: 700;
-                margin-top: 4px;
-            }
-
-            /* Signature Sheet & Merit Table */
-            .print-header {
-                text-align: center;
-                margin-bottom: 14px;
-            }
-            .print-header h2 { font-size: 21px; }
-            .print-header .exam-sub { font-size: 15px; font-weight: 700; margin-top: 2px; }
-            .print-header .sheet-title {
-                font-size: 16px;
-                font-weight: 700;
-                text-decoration: underline;
-                margin-top: 4px;
-            }
-            .print-table {
+            /* Dual Admit Card & Payment Copy Layout on Single A4 Page */
+            .print-admit-dual-container {
                 width: 100%;
-                border-collapse: collapse;
-                margin-top: 10px;
+                height: 285mm;
+                max-height: 285mm;
+                page-break-after: always;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 2px 0;
             }
-            .print-table th, .print-table td {
-                border: 1px solid #000 !important;
-                padding: 7px 9px;
-                color: #000 !important;
-                background: #fff !important;
-                font-size: 13px;
+
+            .admit-single-section {
+                width: 100%;
+                height: 138mm;
+                border: 2px solid #000;
+                padding: 12px 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                background: #fff;
             }
-            .print-table th {
+
+            .cut-divider {
+                width: 100%;
+                border-bottom: 2px dashed #000;
                 text-align: center;
-                font-weight: 700;
+                margin: 4px 0;
+                position: relative;
             }
+            .cut-divider span {
+                background: #fff;
+                padding: 0 10px;
+                font-size: 10px;
+                font-weight: 700;
+                position: relative;
+                top: -8px;
+            }
+
+            .seat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .seat-box { border: 2px dashed #000; padding: 14px; text-align: center; page-break-inside: avoid; }
+            .seat-exam-title { font-size: 15px; font-weight: 700; }
+            .seat-class { font-size: 14px; margin: 3px 0; font-weight: 600; }
+            .seat-roll { font-size: 28px; font-weight: 800; border: 2px solid #000; display: inline-block; padding: 2px 24px; margin: 6px 0; }
+            .seat-name { font-size: 16px; font-weight: 700; margin-top: 4px; }
+
+            .print-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+            .print-table th, .print-table td { border: 1px solid #000 !important; padding: 6px 8px; font-size: 12px; text-align: left; }
+            .print-table th { text-align: center; background: #eee !important; -webkit-print-color-adjust: exact; }
         }
 
         @media (max-width: 900px) {
-            .scanner-container { grid-template-columns: 1fr; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full { grid-column: span 1; }
             .sidebar { width: 70px; padding: 15px 8px; }
             .brand-text, .nav-link span { display: none; }
-            .main-content { margin-left: 70px; max-width: calc(100vw - 70px); }
+            .admin-main { margin-left: 70px; max-width: calc(100vw - 70px); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar no-print">
-        <div class="brand">
-            <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div class="brand-text">
-                <h2 id="sidebar-school-name">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</h2>
-                <span>ভর্তি ব্যবস্থাপনা পোর্টাল</span>
+    <!-- ==================== 1. PUBLIC LANDING PAGE ==================== -->
+    <div id="public-landing" class="no-print">
+        <nav class="landing-nav">
+            <div class="nav-brand-mini">
+                <img src="logo.jpg" id="nav-logo-img" onerror="this.style.display='none'" alt="Logo">
+                <span id="nav-school-title">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</span>
+            </div>
+            <button class="btn-hero-admin" onclick="openLoginModal()">
+                <i class="fa-solid fa-lock"></i> এডমিন লগইন
+            </button>
+        </nav>
+
+        <div class="hero-center">
+            <div class="school-logo-frame">
+                <img src="logo.jpg" id="hero-logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/8074/8074788.png'" alt="লোগো">
+            </div>
+
+            <div class="estd-pill" id="hero-estd">স্থাপিত : ১৯১৫ ইংরেজি</div>
+            
+            <h1 class="hero-school-title" id="hero-school-name">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</h1>
+            
+            <p class="hero-address" id="hero-address">
+                <i class="fa-solid fa-location-dot" style="color: #fca5a5;"></i> ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম।
+            </p>
+
+            <div class="notice-countdown-box">
+                <div class="notice-text">
+                    📢 <b>ভর্তি বিজ্ঞপ্তি ২০২৭:</b> ৬ষ্ঠ, ৭ম, ৮ম ও ৯ম শ্রেণীতে ভর্তির জন্য ফরম বিতরণ ও জমা চলবে <b>১০/১১/২০২৬ থেকে ১৩/১২/২০২৬ পর্যন্ত</b> (ছুটির দিন ব্যতীত, সকাল ১০টা থেকে বিকাল ৪টা)। নির্ধারিত তারিখের মধ্যে অনলাইনে ফরম পূরণপূর্বক প্রিন্ট করে বিদ্যালয়ে জমা দিন[cite: 10]। ভর্তি পরীক্ষা: <b>১৭/১২/২০২৬</b>[cite: 10]।
+                </div>
+                <div class="countdown-timer" id="countdown-clock">
+                    <span>সময়সীমা গণনা চলছে...</span>
+                </div>
+            </div>
+
+            <div class="hero-buttons">
+                <button class="btn-hero-primary" onclick="togglePublicForm(true)">
+                    <i class="fa-solid fa-file-pen"></i> অনলাইন ভর্তি ফরম পূরণ করুন
+                </button>
+                <button class="btn-hero-admin" onclick="openLoginModal()">
+                    <i class="fa-solid fa-user-shield"></i> অফিস / এডমিন প্যানেল
+                </button>
             </div>
         </div>
 
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a class="nav-link active" onclick="switchTab('dashboard', this)">
-                    <i class="fa-solid fa-chart-pie"></i> <span>ড্যাশবোর্ড</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchTab('admission-entry', this)">
-                    <i class="fa-solid fa-file-circle-plus"></i> <span>ফর্ম স্ক্যান ও এন্ট্রি</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchTab('student-list', this)">
-                    <i class="fa-solid fa-users"></i> <span>আবেদনকারী তালিকা</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchTab('exam-docs', this)">
-                    <i class="fa-solid fa-print"></i> <span>প্রবেশপত্র ও সিট প্ল্যান</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchTab('results', this)">
-                    <i class="fa-solid fa-square-poll-vertical"></i> <span>ফলাফল ও মেধাতালিকা</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchTab('admin-panel', this)">
-                    <i class="fa-solid fa-sliders"></i> <span>এডমিন প্যানেল</span>
-                </a>
-            </li>
-        </ul>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content no-print">
-        <header class="topbar">
-            <div class="school-header">
-                <h1 id="header-school-name">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</h1>
-                <p id="header-school-address">ডাকঘর : ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম | স্থাপিত : ১৯১৫ ইংরেজি</p>
-            </div>
-            <div>
-                <span class="badge-session" id="header-session">ভর্তি পরীক্ষা - ২০২৭</span>
-            </div>
-        </header>
-
-        <!-- 1. DASHBOARD -->
-        <section id="dashboard" class="section active">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <p>মোট আবেদনকারী</p>
-                        <h3 id="stat-total">0</h3>
-                    </div>
-                    <div class="stat-icon" style="background: rgba(220, 38, 38, 0.1); color: var(--primary);">
-                        <i class="fa-solid fa-user-graduate"></i>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <p>রোল বরাদ্দকৃত</p>
-                        <h3 id="stat-rolled">0</h3>
-                    </div>
-                    <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--accent);">
-                        <i class="fa-solid fa-id-card"></i>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <p>উত্তীর্ণ শিক্ষার্থী</p>
-                        <h3 id="stat-passed">0</h3>
-                    </div>
-                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <p>ভর্তি পরীক্ষার তারিখ ও সময়</p>
-                        <h3 id="stat-exam-date" style="font-size: 15px;">নির্ধারিত নয়</h3>
-                    </div>
-                    <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
-                        <i class="fa-solid fa-calendar-days"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
+        <!-- Public Admission Form -->
+        <div id="public-form-wrapper">
+            <div class="form-container-box">
                 <div class="card-title">
-                    <span>সিস্টেম নির্দেশিকা ও নিয়মাবলী</span>
+                    <span style="font-size: 19px; color: var(--royal-blue);">
+                        <i class="fa-solid fa-file-circle-plus" style="color: var(--primary);"></i> ভর্তি আবেদন ফরম - <span class="dyn-session">২০২৭</span>
+                    </span>
+                    <button class="btn btn-danger" onclick="togglePublicForm(false)">
+                        <i class="fa-solid fa-xmark"></i> বন্ধ করুন
+                    </button>
                 </div>
-                <p style="color: var(--text-muted); line-height: 1.9; font-size: 14px;">
-                    ১. <b>শ্রেণিভিত্তিক নম্বর বণ্টন:</b> ২য়-৩য় শ্রেণির পরীক্ষা হবে ৫০ নম্বরে (বাংলা-১৫, ইংরেজি-১৫, গণিত-২০) এবং ৪র্থ থেকে ৯ম শ্রেণির পরীক্ষা হবে ১০০ নম্বরে (বাংলা-৩০, ইংরেজি-৩০, গণিত-৪০)।<br>
-                    ২. <b>শুধুমাত্র ষষ্ঠ শ্রেণীর জন্য শাখা বণ্টন:</b> ফলাফল প্রকাশের পর শুধুমাত্র 'ষষ্ঠ শ্রেণি' সিলেক্ট করে অটো শাখা বণ্টন (ক ও খ শাখা) করা যাবে। অন্যান্য শ্রেণীতে এটি প্রযোজ্য নয়।<br>
-                    ৩. <b>প্রিন্ট আউট:</b> প্রতিটি A4 পেজে অর্ধেক করে ২টি প্রবেশপত্র, স্কুল নামবিহীন সিট লেবেল এবং শ্রেণিভিত্তিক আলাদা উপস্থিতি ও স্বাক্ষর শিট প্রিন্ট করা যাবে।
+                <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; background: #fffbeb; padding: 10px; border-left: 4px solid var(--gold); border-radius: 4px;">
+                    নির্দেশনা: নিচের ফরমটি সঠিকভাবে পূরণ করুন। (ফরম নম্বর খালি রাখলে সিস্টেম থেকে অটোমেটিক নম্বর তৈরি হয়ে যাবে)। সাবমিট করার পর ফরমটি প্রিন্ট করে বিদ্যালয়ে এসে ফি জমা দিয়ে প্রবেশপত্র সংগ্রহ করুন[cite: 10]।
                 </p>
-            </div>
-        </section>
 
-        <!-- 2. ADMISSION SCANNER & ENTRY -->
-        <section id="admission-entry" class="section">
-            <div class="card">
-                <div class="card-title">
-                    <span><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary);"></i> হাতে লেখা ফর্ম স্ক্যান ও তথ্য এন্ট্রি</span>
-                    <button class="btn btn-outline" onclick="resetForm()"><i class="fa-solid fa-rotate-right"></i> নতুন ফর্ম</button>
-                </div>
-
-                <div class="scanner-container">
-                    <div>
-                        <label>CamScanner স্ক্যান কপি আপলোড (JPG / PNG)</label>
-                        <div class="upload-zone" onclick="document.getElementById('form-image-input').click()">
-                            <img id="preview-img" alt="Scanned Form Preview">
-                            <div id="upload-placeholder">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                                <h4>ফর্মের ছবি নির্বাচন করুন</h4>
-                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">
-                                    হাতে লেখা ফর্মের ছবি থেকে AI স্বয়ংক্রিয়ভাবে ফর্ম নম্বর ও সকল তথ্য তুলে নেবে
-                                </p>
-                            </div>
-                            <input type="file" id="form-image-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                <form id="pub-student-form" onsubmit="submitPublicForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>ফরম নং / ক্রমিক নং (ঐচ্ছিক - খালি রাখলে অটো আসবে)</label>
+                            <input type="text" id="pub-formNo" placeholder="যেমন: 316">
+                        </div>
+                        <div class="form-group">
+                            <label>যে শ্রেণীতে ভর্তি হতে ইচ্ছুক *</label>
+                            <select id="pub-targetClass" required>
+                                <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি</option>
+                                <option value="৭ম শ্রেণি">৭ম শ্রেণি</option>
+                                <option value="৮ম শ্রেণি">৮ম শ্রেণি</option>
+                                <option value="৯ম শ্রেণি">৯ম শ্রেণি</option>
+                                <option value="২য় শ্রেণি">২য় শ্রেণি</option>
+                                <option value="৩য় শ্রেণি">৩য় শ্রেণি</option>
+                                <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি</option>
+                                <option value="৫ম শ্রেণি">৫ম শ্রেণি</option>
+                            </select>
                         </div>
 
-                        <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 12px;" onclick="scanHandwrittenForm()">
-                            <i class="fa-solid fa-microchip"></i> AI দিয়ে ছবি থেকে তথ্য স্ক্যান করুন
-                        </button>
+                        <div class="form-group">
+                            <label>শিক্ষার্থীর নাম (বাংলায়) *</label>
+                            <input type="text" id="pub-nameBn" required placeholder="জন্ম নিবন্ধন অনুযায়ী">
+                        </div>
+                        <div class="form-group">
+                            <label>শিক্ষার্থীর নাম (ইংরেজিতে বড় অক্ষরে)</label>
+                            <input type="text" id="pub-nameEn" placeholder="BLOCK LETTERS">
+                        </div>
 
-                        <div class="loader-box" id="ocr-loader">
-                            <div class="spinner"></div>
-                            <span>হাতের লেখা বিশ্লেষণ করা হচ্ছে...</span>
+                        <div class="form-group">
+                            <label>পিতার নাম (বাংলায়) *</label>
+                            <input type="text" id="pub-fatherName" required placeholder="পিতার নাম">
+                        </div>
+                        <div class="form-group">
+                            <label>পিতার মোবাইল নম্বর *</label>
+                            <input type="text" id="pub-fatherPhone" required placeholder="01XXXXXXXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label>মাতার নাম (বাংলায়) *</label>
+                            <input type="text" id="pub-motherName" required placeholder="মাতার নাম">
+                        </div>
+                        <div class="form-group">
+                            <label>মাতার মোবাইল নম্বর</label>
+                            <input type="text" id="pub-motherPhone" placeholder="01XXXXXXXXX">
+                        </div>
+
+                        <div class="form-group full">
+                            <label>স্থায়ী ঠিকানা (গ্রাম, ডাকঘর, থানা/উপজেলা, জেলা)</label>
+                            <input type="text" id="pub-permAddress" placeholder="গ্রাম, ডাকঘর, থানা, জেলা">
+                        </div>
+
+                        <div class="form-group full">
+                            <label>বর্তমান ঠিকানা / যোগাযোগের ঠিকানা *</label>
+                            <input type="text" id="pub-currAddress" required placeholder="গ্রাম, ডাকঘর, থানা, জেলা, মোবাইল/টেলিফোন">
+                        </div>
+
+                        <div class="form-group">
+                            <label>পিতা জীবিত না থাকলে আইনানুগ অভিভাবকের নাম ও ঠিকানা</label>
+                            <input type="text" id="pub-guardianInfo" placeholder="নাম, ডাকঘর, গ্রাম, থানা, মোবাইল">
+                        </div>
+                        <div class="form-group">
+                            <label>সর্বশেষ কোন শ্রেণীতে অধ্যয়ন করেছে?</label>
+                            <input type="text" id="pub-lastClass" placeholder="যেমন: পঞ্চম শ্রেণি">
+                        </div>
+
+                        <div class="form-group">
+                            <label>বিদ্যালয়ের নাম (পূর্ববর্তী বিদ্যালয়)</label>
+                            <input type="text" id="pub-prevSchool" placeholder="বিদ্যালয়ের নাম ও ঠিকানা">
+                        </div>
+                        <div class="form-group">
+                            <label>বদলী সনদ নং ও তারিখ (টিসি নং)</label>
+                            <input type="text" id="pub-tcNo" placeholder="সনদ নং ও তারিখ">
+                        </div>
+
+                        <div class="form-group">
+                            <label>ধর্ম *</label>
+                            <input type="text" id="pub-religion" required placeholder="যেমন: ইসলাম / হিন্দু">
+                        </div>
+                        <div class="form-group">
+                            <label>জাতীয়তা *</label>
+                            <input type="text" id="pub-nationality" value="বাংলাদেশী" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>জন্ম তারিখ (DD/MM/YYYY) *</label>
+                            <input type="text" id="pub-dob" required placeholder="যেমন: 12/05/2015">
+                        </div>
+                        <div class="form-group">
+                            <label>জন্ম নিবন্ধন নম্বর (১৭ ডিজিট) *</label>
+                            <input type="text" id="pub-birthReg" required placeholder="১৭ ডিজিটের জন্ম নিবন্ধন নং">
+                        </div>
+
+                        <div class="form-group">
+                            <label>গত বার্ষিক পরীক্ষায় প্রাপ্ত নম্বর / গ্রেড</label>
+                            <input type="text" id="pub-prevResult" placeholder="প্রাপ্ত নম্বর বা গ্রেড">
+                        </div>
+                        <div class="form-group">
+                            <label>ক) জমির পরিমাণ (শতক) ও খ) পিতা/মাতা/অভিভাবকের বার্ষিক আয়</label>
+                            <input type="text" id="pub-annualIncome" placeholder="যেমন: জমি ২ শতক, আয় ১,৫০,০০০ টাকা">
                         </div>
                     </div>
 
-                    <form id="student-form" onsubmit="saveStudent(event)">
-                        <input type="hidden" id="edit-id">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>ফর্ম নম্বর / ক্রমিক নং (ফর্মে থাকা নং) *</label>
-                                <input type="text" id="formNo" required placeholder="যেমন: 316">
-                            </div>
-                            <div class="form-group">
-                                <label>ভর্তিচ্ছু শ্রেণি (Target Class) *</label>
-                                <select id="targetClass" required>
-                                    <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি (Class 6)</option>
-                                    <option value="৭ম শ্রেণি">৭ম শ্রেণি (Class 7)</option>
-                                    <option value="৮ম শ্রেণি">৮ম শ্রেণি (Class 8)</option>
-                                    <option value="৯ম শ্রেণি">৯ম শ্রেণি (Class 9)</option>
-                                    <option value="২য় শ্রেণি">২য় শ্রেণি (Class 2)</option>
-                                    <option value="৩য় শ্রেণি">৩য় শ্রেণি (Class 3)</option>
-                                    <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি (Class 4)</option>
-                                    <option value="৫ম শ্রেণি">৫ম শ্রেণি (Class 5)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>ভর্তি পরীক্ষার রোল (Exam Roll)</label>
-                                <input type="text" id="examRoll" placeholder="খালি রাখলে শ্রেণি অনুযায়ী অটো পড়বে">
-                            </div>
-                            <div class="form-group">
-                                <label>অভিভাবকের মোবাইল নম্বর *</label>
-                                <input type="text" id="phone" required placeholder="01XXXXXXXXX">
-                            </div>
-
-                            <div class="form-group">
-                                <label>শিক্ষার্থীর নাম (বাংলায়) *</label>
-                                <input type="text" id="nameBn" required placeholder="নাম বাংলায়">
-                            </div>
-                            <div class="form-group">
-                                <label>শিক্ষার্থীর নাম (ইংরেজিতে)</label>
-                                <input type="text" id="nameEn" placeholder="Student Name in English">
-                            </div>
-
-                            <div class="form-group">
-                                <label>পিতার নাম *</label>
-                                <input type="text" id="fatherName" required placeholder="পিতার নাম">
-                            </div>
-                            <div class="form-group">
-                                <label>মাতার নাম *</label>
-                                <input type="text" id="motherName" required placeholder="মাতার নাম">
-                            </div>
-
-                            <div class="form-group">
-                                <label>জন্ম তারিখ *</label>
-                                <input type="text" id="dob" required placeholder="DD/MM/YYYY">
-                            </div>
-                            <div class="form-group">
-                                <label>জন্ম নিবন্ধন নম্বর (১৭ ডিজিট) *</label>
-                                <input type="text" id="birthReg" required placeholder="জন্ম নিবন্ধন নং">
-                            </div>
-
-                            <div class="form-group full">
-                                <label>বর্তমান / স্থায়ী ঠিকানা</label>
-                                <input type="text" id="address" placeholder="গ্রাম, ডাকঘর, থানা/উপজেলা, জেলা">
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 20px; display: flex; gap: 12px;">
-                            <button type="submit" class="btn btn-success" style="flex: 1; justify-content: center;">
-                                <i class="fa-solid fa-floppy-disk"></i> তথ্য সংরক্ষণ করুন
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. STUDENT LIST -->
-        <section id="student-list" class="section">
-            <div class="card">
-                <div class="card-title">
-                    <span>আবেদনকারী শিক্ষার্থীদের তালিকা</span>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <select id="filter-class" onchange="renderStudentTable()" style="padding: 6px 10px;">
-                            <option value="">সকল শ্রেণি</option>
-                            <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি</option>
-                            <option value="৭ম শ্রেণি">৭ম শ্রেণি</option>
-                            <option value="৮ম শ্রেণি">৮ম শ্রেণি</option>
-                            <option value="৯ম শ্রেণি">৯ম শ্রেণি</option>
-                            <option value="২য় শ্রেণি">২য় শ্রেণি</option>
-                            <option value="৩য় শ্রেণি">৩য় শ্রেণি</option>
-                            <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি</option>
-                            <option value="৫ম শ্রেণি">৫ম শ্রেণি</option>
-                        </select>
-                        <input type="text" id="search-input" onkeyup="renderStudentTable()" placeholder="নাম, ফর্ম বা রোল খুঁজুন..." style="width: 210px;">
-                        <button class="btn btn-primary" onclick="autoAssignClassRolls()">
-                            <i class="fa-solid fa-wand-sparkles"></i> শ্রেণিভিত্তিক রোল জেনারেট
-                        </button>
-                        <button class="btn btn-success" onclick="exportCSV()">
-                            <i class="fa-solid fa-file-excel"></i> Excel
+                    <div style="margin-top: 25px; display: flex; gap: 12px;">
+                        <button type="button" class="btn btn-outline" onclick="resetPublicForm()">রিসেট</button>
+                        <button type="submit" class="btn btn-success" style="flex: 1; justify-content: center; font-size: 16px; padding: 12px;">
+                            <i class="fa-solid fa-file-arrow-down"></i> সাবমিট করুন ও মূল ফরম প্রিন্ট (পিডিএফ) নিন
                         </button>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
 
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ফর্ম নং</th>
-                                <th>পরীক্ষার রোল</th>
-                                <th>শ্রেণি</th>
-                                <th>শিক্ষার্থীর নাম</th>
-                                <th>পিতা ও মাতার নাম</th>
-                                <th>জন্ম তারিখ ও নিবন্ধন</th>
-                                <th>মোবাইল</th>
-                                <th>অ্যাকশন</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student-table-body">
-                        </tbody>
-                    </table>
+        <footer class="landing-footer">
+            © <span class="dyn-session">২০২৭</span> ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয় | সর্বস্বত্ব সংরক্ষিত
+        </footer>
+    </div>
+
+    <!-- ==================== 2. ADMIN WORKSPACE ==================== -->
+    <div id="admin-workspace" class="no-print">
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="logo.jpg" id="admin-sidebar-logo" onerror="this.style.display='none'" alt="Logo">
+                <div class="brand-text">
+                    <h2 id="sidebar-school-name">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</h2>
+                    <span>অফিস কন্ট্রোল প্যানেল</span>
                 </div>
             </div>
-        </section>
 
-        <!-- 4. EXAM DOCUMENTS -->
-        <section id="exam-docs" class="section">
-            <div class="card">
-                <div class="card-title">
-                    <span>ভর্তি পরীক্ষার ডকুমেন্ট প্রিন্ট সেন্টার (শ্রেণিভিত্তিক)</span>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="margin: 0; font-weight: 600; color: var(--text-main);">প্রিন্টের জন্য শ্রেণি নির্বাচন:</label>
-                        <select id="print-class-select" style="padding: 8px 14px; font-weight: 600; border-color: var(--primary);">
-                            <option value="ALL">সকল শ্রেণি (All Classes)</option>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link active" onclick="switchTab('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> <span>ড্যাশবোর্ড</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="switchTab('student-list', this)"><i class="fa-solid fa-users"></i> <span>আবেদনকারী তালিকা ও ফি জমা</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="switchTab('exam-docs', this)"><i class="fa-solid fa-print"></i> <span>ফরম, প্রবেশপত্র ও সিট লেবেল</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="switchTab('results', this)"><i class="fa-solid fa-square-poll-vertical"></i> <span>ফলাফল ও শাখা বণ্টন</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="switchTab('admin-panel', this)"><i class="fa-solid fa-sliders"></i> <span>সেটিংস ও ফরম ফি</span></a></li>
+            </ul>
+
+            <div style="padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <button class="btn btn-danger" style="width: 100%; justify-content: center;" onclick="logoutAdmin()">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span>লগআউট</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="topbar">
+                <div>
+                    <h1 style="font-size: 19px;" id="admin-header-school">ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়</h1>
+                    <p style="font-size: 13px; color: var(--text-muted);" id="admin-header-addr">ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="background: rgba(220,38,38,0.1); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px;" id="admin-session-badge">ভর্তি পরীক্ষা - ২০২৭</span>
+                    <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i> লগআউট</button>
+                </div>
+            </header>
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info"><p>মোট আবেদনকারী</p><h3 id="stat-total">0</h3></div>
+                        <div class="stat-icon" style="background: rgba(220, 38, 38, 0.1); color: var(--primary);"><i class="fa-solid fa-user-graduate"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info"><p>ফি জমা দিয়েছেন (Paid)</p><h3 id="stat-paid">0</h3></div>
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info"><p>রোল বরাদ্দকৃত</p><h3 id="stat-rolled">0</h3></div>
+                        <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--accent);"><i class="fa-solid fa-id-card"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info"><p>ফরম ফি</p><h3 id="stat-fee" style="font-size: 20px;">৫০০ টাকা</h3></div>
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--gold);"><i class="fa-solid fa-bangladeshi-taka-sign"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student List & Payment Status -->
+            <section id="student-list" class="section">
+                <div class="card">
+                    <div class="card-title">
+                        <span>আবেদনকারী শিক্ষার্থী ও ফি জমা (Payment) নিশ্চিতকরণ</span>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="filter-class" onchange="renderStudentTable()" style="padding: 6px 10px;">
+                                <option value="">সকল শ্রেণি</option>
+                                <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি</option>
+                                <option value="৭ম শ্রেণি">৭ম শ্রেণি</option>
+                                <option value="৮ম শ্রেণি">৮ম শ্রেণি</option>
+                                <option value="৯ম শ্রেণি">৯ম শ্রেণি</option>
+                                <option value="২য় শ্রেণি">২য় শ্রেণি</option>
+                                <option value="৩য় শ্রেণি">৩য় শ্রেণি</option>
+                                <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি</option>
+                                <option value="৫ম শ্রেণি">৫ম শ্রেণি</option>
+                            </select>
+                            <input type="text" id="search-input" onkeyup="renderStudentTable()" placeholder="নাম বা ফরম নং..." style="width: 180px;">
+                            <button class="btn btn-primary" onclick="autoAssignClassRolls()"><i class="fa-solid fa-wand-sparkles"></i> রোল জেনারেট</button>
+                            <button class="btn btn-success" onclick="exportCSV()"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ফরম নং</th>
+                                    <th>পরীক্ষার রোল</th>
+                                    <th>শ্রেণি</th>
+                                    <th>শিক্ষার্থীর নাম</th>
+                                    <th>পিতা ও মোবাইল</th>
+                                    <th>ফি জমা (Payment)</th>
+                                    <th>অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam Documents & Print -->
+            <section id="exam-docs" class="section">
+                <div class="card">
+                    <div class="card-title">
+                        <span>ফরম, প্রবেশপত্র ও সিট লেবেল প্রিন্ট সেন্টার</span>
+                        <select id="print-class-select" style="padding: 8px 14px; font-weight: 600;">
+                            <option value="ALL">সকল শ্রেণি</option>
                             <option value="৬ষ্ঠ শ্রেণি" selected>৬ষ্ঠ শ্রেণি</option>
                             <option value="৭ম শ্রেণি">৭ম শ্রেণি</option>
                             <option value="৮ম শ্রেণি">৮ম শ্রেণি</option>
@@ -900,148 +822,125 @@
                             <option value="৫ম শ্রেণি">৫ম শ্রেণি</option>
                         </select>
                     </div>
-                </div>
-                <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">
-                    উপরে নির্দিষ্ট শ্রেণি নির্বাচন করে নিচের বাটনগুলোতে ক্লিক করলে শুধুমাত্র ওই শ্রেণির প্রবেশপত্র, সিট লেবেল ও স্বাক্ষর শিট A4 পেজে প্রিন্ট হবে।
-                </p>
 
-                <div class="stats-grid">
-                    <div class="card" style="text-align: center; margin-bottom: 0;">
-                        <i class="fa-solid fa-id-badge" style="font-size: 36px; color: var(--primary); margin-bottom: 12px;"></i>
-                        <h4>প্রবেশপত্র (Admit Card)</h4>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">প্রতি A4 পেজে অর্ধেক করে ২টি প্রবেশপত্র</p>
-                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="printAdmitCards()">
-                            <i class="fa-solid fa-print"></i> প্রবেশপত্র প্রিন্ট করুন
-                        </button>
-                    </div>
-
-                    <div class="card" style="text-align: center; margin-bottom: 0;">
-                        <i class="fa-solid fa-chair" style="font-size: 36px; color: var(--accent); margin-bottom: 12px;"></i>
-                        <h4>সিট লেবেল (Seat Label)</h4>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">ভর্তি পরীক্ষা সাল, শ্রেণি, রোল ও নাম</p>
-                        <button class="btn btn-accent" style="margin-top: 15px;" onclick="printSeatLabels()">
-                            <i class="fa-solid fa-print"></i> সিট লেবেল প্রিন্ট করুন
-                        </button>
-                    </div>
-
-                    <div class="card" style="text-align: center; margin-bottom: 0;">
-                        <i class="fa-solid fa-file-signature" style="font-size: 36px; color: var(--success); margin-bottom: 12px;"></i>
-                        <h4>উপস্থিতি ও স্বাক্ষর শিট</h4>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">শ্রেণিভিত্তিক ফর্ম নং, রোল, নাম, পিতা-মাতা ও স্বাক্ষর</p>
-                        <button class="btn btn-success" style="margin-top: 15px;" onclick="printSignatureSheet()">
-                            <i class="fa-solid fa-print"></i> স্বাক্ষর শিট প্রিন্ট করুন
-                        </button>
+                    <div class="stats-grid">
+                        <div class="card" style="text-align: center; margin-bottom: 0;">
+                            <i class="fa-solid fa-file-lines" style="font-size: 36px; color: var(--primary); margin-bottom: 12px;"></i>
+                            <h4>মূল ভর্তি ফরম (প্রিন্ট)</h4>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">অফিসে জমার জন্য মূল ফরম</p>
+                            <button class="btn btn-primary" style="margin-top: 15px;" onclick="printAdmissionForms()"><i class="fa-solid fa-print"></i> ফরম প্রিন্ট</button>
+                        </div>
+                        <div class="card" style="text-align: center; margin-bottom: 0;">
+                            <i class="fa-solid fa-id-badge" style="font-size: 36px; color: var(--accent); margin-bottom: 12px;"></i>
+                            <h4>প্রবেশপত্র (Admit Card)</h4>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">ফি জমা সাপেক্ষে প্রবেশপত্র</p>
+                            <button class="btn btn-accent" style="margin-top: 15px;" onclick="printAdmitCards()"><i class="fa-solid fa-print"></i> প্রবেশপত্র প্রিন্ট</button>
+                        </div>
+                        <div class="card" style="text-align: center; margin-bottom: 0;">
+                            <i class="fa-solid fa-chair" style="font-size: 36px; color: var(--gold); margin-bottom: 12px;"></i>
+                            <h4>সিট লেবেল (Seat Label)</h4>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">পরীক্ষা কক্ষের সিট লেবেল</p>
+                            <button class="btn btn-warning" style="margin-top: 15px;" onclick="printSeatLabels()"><i class="fa-solid fa-print"></i> সিট লেবেল প্রিন্ট</button>
+                        </div>
+                        <div class="card" style="text-align: center; margin-bottom: 0;">
+                            <i class="fa-solid fa-file-signature" style="font-size: 36px; color: var(--success); margin-bottom: 12px;"></i>
+                            <h4>উপস্থিতি ও স্বাক্ষর শিট</h4>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">পরীক্ষার কক্ষের উপস্থিতি শিট</p>
+                            <button class="btn btn-success" style="margin-top: 15px;" onclick="printSignatureSheet()"><i class="fa-solid fa-print"></i> স্বাক্ষর শিট প্রিন্ট</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- 5. RESULTS & AUTO SECTIONS (ONLY FOR 6TH CLASS) -->
-        <section id="results" class="section">
-            <div class="card">
-                <div class="card-title">
-                    <span>ভর্তি পরীক্ষার নম্বর এন্ট্রি ও মেধাতালিকা</span>
-                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <select id="result-class-filter" onchange="onResultClassChange()" style="padding: 7px 12px; font-weight: 600;">
-                            <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি (পূর্ণমান ১০০)</option>
-                            <option value="৭ম শ্রেণি">৭ম শ্রেণি (পূর্ণমান ১০০)</option>
-                            <option value="৮ম শ্রেণি">৮ম শ্রেণি (পূর্ণমান ১০০)</option>
-                            <option value="৯ম শ্রেণি">৯ম শ্রেণি (পূর্ণমান ১০০)</option>
-                            <option value="২য় শ্রেণি">২য় শ্রেণি (পূর্ণমান ৫০)</option>
-                            <option value="৩য় শ্রেণি">৩য় শ্রেণি (পূর্ণমান ৫০)</option>
-                            <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি (পূর্ণমান ১০০)</option>
-                            <option value="৫ম শ্রেণি">৫ম শ্রেণি (পূর্ণমান ১০০)</option>
-                        </select>
-                        <button id="btn-auto-section" class="btn btn-accent" onclick="autoDistributeSections()" style="display: inline-flex;">
-                            <i class="fa-solid fa-code-branch"></i> অটো শাখা বণ্টন (শুধু ৬ষ্ঠ শ্রেণি)
-                        </button>
-                        <button class="btn btn-primary" onclick="printMeritList()">
-                            <i class="fa-solid fa-print"></i> মেধাতালিকা প্রিন্ট
-                        </button>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>মেধাক্রম</th>
-                                <th>ফর্ম নং</th>
-                                <th>পরীক্ষার রোল</th>
-                                <th>শিক্ষার্থীর নাম</th>
-                                <th id="th-sub1">বাংলা (৩০)</th>
-                                <th id="th-sub2">ইংরেজি (৩০)</th>
-                                <th id="th-sub3">গণিত (৪০)</th>
-                                <th>মোট নম্বর</th>
-                                <th>ফলাফল</th>
-                                <th id="th-section-header">বরাদ্দকৃত শাখা ও রোল</th>
-                            </tr>
-                        </thead>
-                        <tbody id="result-table-body">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. ADMIN PANEL -->
-        <section id="admin-panel" class="section">
-            <div class="card">
-                <div class="card-title">
-                    <span><i class="fa-solid fa-gear"></i> এডমিন প্যানেল ও বিদ্যালয়ের তথ্য সেটিংস</span>
-                </div>
-
-                <form onsubmit="saveSettings(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>বিদ্যালয়ের নাম *</label>
-                            <input type="text" id="cfg-school-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>স্থাপিত সাল (যেমন: স্থাপিত : ১৯১৫ ইংরেজি)</label>
-                            <input type="text" id="cfg-estd" placeholder="স্থাপিত : ১৯১৫ ইংরেজি">
-                        </div>
-                        <div class="form-group">
-                            <label>বিদ্যালয়ের ঠিকানা *</label>
-                            <input type="text" id="cfg-school-address" required>
-                        </div>
-                        <div class="form-group">
-                            <label>ভর্তি পরীক্ষার শিক্ষাবর্ষ (যেমন: ২০২৭)</label>
-                            <input type="text" id="cfg-session" placeholder="২০২৭">
-                        </div>
-                        <div class="form-group">
-                            <label>ভর্তি পরীক্ষার তারিখ</label>
-                            <input type="text" id="cfg-exam-date" placeholder="যেমন: ২০ ডিসেম্বর ২০২৬">
-                        </div>
-                        <div class="form-group">
-                            <label>পরীক্ষা আরম্ভের সময়</label>
-                            <input type="text" id="cfg-exam-time" placeholder="যেমন: সকাল ১০:০০ ঘটিকা">
-                        </div>
-                        <div class="form-group full">
-                            <label>Google Gemini API Key (হাতে লেখা ফর্ম AI স্ক্যানের জন্য)</label>
-                            <input type="password" id="cfg-api-key" placeholder="AIzaSy...">
+            <!-- Results & 6th Class Auto Section -->
+            <section id="results" class="section">
+                <div class="card">
+                    <div class="card-title">
+                        <span>নম্বর এন্ট্রি ও ফলাফল (৬ষ্ঠ শ্রেণির অটো শাখা বণ্টন)</span>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <select id="result-class-filter" onchange="renderResultTable()" style="padding: 7px 12px; font-weight: 600;">
+                                <option value="৬ষ্ঠ শ্রেণি">৬ষ্ঠ শ্রেণি</option>
+                                <option value="৭ম শ্রেণি">৭ম শ্রেণি</option>
+                                <option value="৮ম শ্রেণি">৮ম শ্রেণি</option>
+                                <option value="৯ম শ্রেণি">৯ম শ্রেণি</option>
+                                <option value="২য় শ্রেণি">২য় শ্রেণি</option>
+                                <option value="৩য় শ্রেণি">৩য় শ্রেণি</option>
+                                <option value="৪র্থ শ্রেণি">৪র্থ শ্রেণি</option>
+                                <option value="৫ম শ্রেণি">৫ম শ্রেণি</option>
+                            </select>
+                            <button id="btn-auto-section" class="btn btn-accent" onclick="autoDistributeSections()">
+                                <i class="fa-solid fa-code-branch"></i> অটো শাখা বণ্টন (শুধু ৬ষ্ঠ শ্রেণি)
+                            </button>
+                            <button class="btn btn-primary" onclick="printMeritList()"><i class="fa-solid fa-print"></i> মেধাতালিকা প্রিন্ট</button>
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px;">
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> সেটিংস সেভ করুন</button>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>মেধাক্রম</th>
+                                    <th>ফরম নং</th>
+                                    <th>রোল</th>
+                                    <th>শিক্ষার্থীর নাম</th>
+                                    <th id="th-sub1">বাংলা</th>
+                                    <th id="th-sub2">ইংরেজি</th>
+                                    <th id="th-sub3">গণিত</th>
+                                    <th>মোট</th>
+                                    <th>ফলাফল</th>
+                                    <th id="th-section-header">শাখা ও রোল</th>
+                                </tr>
+                            </thead>
+                            <tbody id="result-table-body"></tbody>
+                        </table>
                     </div>
-                </form>
-
-                <hr style="border-color: var(--border-color); margin: 25px 0;">
-
-                <div class="card-title">
-                    <span>ডাটা ব্যাকআপ ও রিস্টোর</span>
                 </div>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="btn btn-success" onclick="backupJSON()"><i class="fa-solid fa-download"></i> ব্যাকআপ (JSON)</button>
-                    <button class="btn btn-warning" onclick="document.getElementById('restore-file').click()"><i class="fa-solid fa-upload"></i> রিস্টোর</button>
-                    <input type="file" id="restore-file" accept=".json" style="display: none;" onchange="restoreJSON(event)">
-                    <button class="btn btn-danger" onclick="clearAllData()"><i class="fa-solid fa-trash"></i> সব মুছুন</button>
+            </section>
+
+            <!-- Settings & Fee -->
+            <section id="admin-panel" class="section">
+                <div class="card">
+                    <div class="card-title"><span><i class="fa-solid fa-gear"></i> বিদ্যালয় ও ফরম ফি সেটিংস</span></div>
+                    <form onsubmit="saveSettings(event)">
+                        <div class="form-grid">
+                            <div class="form-group"><label>বিদ্যালয়ের নাম</label><input type="text" id="cfg-school-name" required></div>
+                            <div class="form-group"><label>স্থাপিত সাল</label><input type="text" id="cfg-estd"></div>
+                            <div class="form-group"><label>ঠিকানা</label><input type="text" id="cfg-school-address" required></div>
+                            <div class="form-group"><label>শিক্ষাবর্ষ</label><input type="text" id="cfg-session"></div>
+                            <div class="form-group"><label>ভর্তি পরীক্ষার ফরম ফি *</label><input type="text" id="cfg-admission-fee" required placeholder="যেমন: ৫০০ টাকা"></div>
+                            <div class="form-group"><label>পরীক্ষার তারিখ</label><input type="text" id="cfg-exam-date"></div>
+                            <div class="form-group"><label>পরীক্ষার সময়</label><input type="text" id="cfg-exam-time"></div>
+                            <div class="form-group"><label>এডমিন পাসওয়ার্ড</label><input type="text" id="cfg-admin-pass" required></div>
+                        </div>
+                        <div style="margin-top: 20px;"><button type="submit" class="btn btn-primary">সেটিংস সেভ করুন</button></div>
+                    </form>
+                    <hr style="margin: 25px 0;">
+                    <div style="display: flex; gap: 15px;">
+                        <button class="btn btn-success" onclick="backupJSON()"><i class="fa-solid fa-download"></i> ব্যাকআপ</button>
+                        <button class="btn btn-danger" onclick="clearAllData()">সব মুছুন</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal-overlay no-print">
+        <div class="login-box">
+            <h2 style="margin-bottom: 5px; color: var(--royal-blue);">অফিস লগইন</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">বিদ্যালয় কর্তৃপক্ষের প্রবেশাধিকার</p>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group" style="text-align: left; margin-bottom: 16px;">
+                    <label>পাসওয়ার্ড দিন</label>
+                    <input type="password" id="login-password-input" required placeholder="ডিফল্ট: admin123">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-outline" style="flex: 1;" onclick="closeLoginModal()">বাতিল</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">প্রবেশ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div id="print-area"></div>
 
@@ -1050,231 +949,162 @@
         let settings = JSON.parse(localStorage.getItem('admission_settings')) || {
             schoolName: 'ফতেয়াবাদ মহাকালী বালিকা উচ্চ বিদ্যালয়',
             estd: 'স্থাপিত : ১৯১৫ ইংরেজি',
-            schoolAddress: 'ডাকঘর : ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম।',
+            schoolAddress: 'ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম।',
             session: '২০২৭',
-            examDate: '২০ ডিসেম্বর ২০২৬',
+            admissionFee: '৫০০ টাকা',
+            examDate: '১৭ ডিসেম্বর ২০২৬',
             examTime: 'সকাল ১০:০০ ঘটিকা',
-            apiKey: ''
+            adminPass: 'admin123',
+            customLogo: ''
         };
 
-        let uploadedImageBase64 = null;
-        let uploadedImageMime = 'image/jpeg';
+        let isAdmin = sessionStorage.getItem('is_school_admin') === 'true';
 
         window.onload = () => {
             applySettingsToUI();
-            updateDashboard();
-            renderStudentTable();
-            renderResultTable();
+            updateAuthUI();
+            startCountdown();
+            if (isAdmin) { updateDashboard(); renderStudentTable(); renderResultTable(); }
         };
 
+        function startCountdown() {
+            const countDownDate = new Date("Dec 13, 2026 16:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                if (distance < 0) {
+                    document.getElementById("countdown-clock").innerHTML = "<span>ফরম জমাদানের সময় শেষ হয়েছে</span>";
+                    return;
+                }
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("countdown-clock").innerHTML = `⏳ সময় বাকি: <span class="countdown-item">${days} দিন</span> <span class="countdown-item">${hours} ঘন্টা</span> <span class="countdown-item">${minutes} মিনিট</span>`;
+            }, 1000);
+        }
+
+        function togglePublicForm(show) {
+            const wrapper = document.getElementById('public-form-wrapper');
+            if (show) { wrapper.classList.add('open'); wrapper.scrollIntoView({ behavior: 'smooth' }); }
+            else { wrapper.classList.remove('open'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
+
+        function openLoginModal() { document.getElementById('login-modal').classList.add('show'); }
+        function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            if (document.getElementById('login-password-input').value === (settings.adminPass || 'admin123')) {
+                isAdmin = true; sessionStorage.setItem('is_school_admin', 'true');
+                closeLoginModal(); updateAuthUI(); switchTab('dashboard', null);
+            } else { alert('ভুল পাসওয়ার্ড!'); }
+        }
+
+        function logoutAdmin() { isAdmin = false; sessionStorage.removeItem('is_school_admin'); updateAuthUI(); }
+
+        function updateAuthUI() {
+            if (isAdmin) { document.body.classList.add('admin-logged-in'); updateDashboard(); renderStudentTable(); renderResultTable(); }
+            else { document.body.classList.remove('admin-logged-in'); }
+        }
+
         function switchTab(tabId, el) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            if (!isAdmin) return openLoginModal();
+            document.querySelectorAll('#admin-workspace .section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             if (el) el.classList.add('active');
-
             if (tabId === 'dashboard') updateDashboard();
             if (tabId === 'student-list') renderStudentTable();
             if (tabId === 'results') renderResultTable();
         }
 
         function applySettingsToUI() {
+            document.getElementById('nav-school-title').innerText = settings.schoolName;
+            document.getElementById('hero-school-name').innerText = settings.schoolName;
+            document.getElementById('hero-estd').innerText = settings.estd;
+            document.getElementById('hero-address').innerHTML = `<i class="fa-solid fa-location-dot" style="color: #fca5a5;"></i> ${settings.schoolAddress}`;
             document.getElementById('sidebar-school-name').innerText = settings.schoolName;
-            document.getElementById('header-school-name').innerText = settings.schoolName;
-            document.getElementById('header-school-address').innerText = `${settings.schoolAddress} ${settings.estd ? '| ' + settings.estd : ''}`;
-            document.getElementById('header-session').innerText = 'ভর্তি পরীক্ষা - ' + settings.session;
-            document.getElementById('stat-exam-date').innerText = `${settings.examDate || ''} (${settings.examTime || ''})`;
+            document.getElementById('admin-header-school').innerText = settings.schoolName;
+            document.getElementById('admin-header-addr').innerText = settings.schoolAddress;
+            document.getElementById('stat-fee').innerText = settings.admissionFee;
+            document.querySelectorAll('.dyn-session').forEach(el => el.innerText = settings.session);
 
             document.getElementById('cfg-school-name').value = settings.schoolName;
-            document.getElementById('cfg-estd').value = settings.estd || '';
+            document.getElementById('cfg-estd').value = settings.estd;
             document.getElementById('cfg-school-address').value = settings.schoolAddress;
             document.getElementById('cfg-session').value = settings.session;
+            document.getElementById('cfg-admission-fee').value = settings.admissionFee;
             document.getElementById('cfg-exam-date').value = settings.examDate;
-            document.getElementById('cfg-exam-time').value = settings.examTime || '';
-            document.getElementById('cfg-api-key').value = settings.apiKey;
+            document.getElementById('cfg-exam-time').value = settings.examTime;
+            document.getElementById('cfg-admin-pass').value = settings.adminPass || 'admin123';
         }
 
         function saveSettings(e) {
             e.preventDefault();
-            settings = {
-                schoolName: document.getElementById('cfg-school-name').value.trim(),
-                estd: document.getElementById('cfg-estd').value.trim(),
-                schoolAddress: document.getElementById('cfg-school-address').value.trim(),
-                session: document.getElementById('cfg-session').value.trim(),
-                examDate: document.getElementById('cfg-exam-date').value.trim(),
-                examTime: document.getElementById('cfg-exam-time').value.trim(),
-                apiKey: document.getElementById('cfg-api-key').value.trim()
-            };
+            settings.schoolName = document.getElementById('cfg-school-name').value.trim();
+            settings.estd = document.getElementById('cfg-estd').value.trim();
+            settings.schoolAddress = document.getElementById('cfg-school-address').value.trim();
+            settings.session = document.getElementById('cfg-session').value.trim();
+            settings.admissionFee = document.getElementById('cfg-admission-fee').value.trim();
+            settings.examDate = document.getElementById('cfg-exam-date').value.trim();
+            settings.examTime = document.getElementById('cfg-exam-time').value.trim();
+            settings.adminPass = document.getElementById('cfg-admin-pass').value.trim() || 'admin123';
             localStorage.setItem('admission_settings', JSON.stringify(settings));
-            applySettingsToUI();
-            alert('সেটিংস সংরক্ষিত হয়েছে!');
+            applySettingsToUI(); alert('সেটিংস সংরক্ষিত হয়েছে!');
         }
 
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            uploadedImageMime = file.type;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.getElementById('preview-img');
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-                document.getElementById('upload-placeholder').style.display = 'none';
-                uploadedImageBase64 = e.target.result.split(',')[1];
-            };
-            reader.readAsDataURL(file);
-        }
-
-        async function scanHandwrittenForm() {
-            if (!uploadedImageBase64) return alert('প্রথমে ফর্মের ছবি আপলোড করুন!');
-            if (!settings.apiKey) return alert('এডমিন প্যানেলে Gemini API Key বসান।');
-
-            const loader = document.getElementById('ocr-loader');
-            loader.style.display = 'flex';
-
-            const promptText = `You are an expert OCR data extractor for a Bangladeshi school admission form.
-Extract the printed serial/form number and handwritten Bengali/English details from this scanned form image.
-Return ONLY a valid JSON object with exact keys:
-{
-  "formNo": "",
-  "nameBn": "",
-  "nameEn": "",
-  "fatherName": "",
-  "motherName": "",
-  "dob": "",
-  "birthReg": "",
-  "targetClass": "৬ষ্ঠ শ্রেণি",
-  "phone": "",
-  "address": ""
-}
-Match targetClass to one of: "২য় শ্রেণি", "৩য় শ্রেণি", "৪র্থ শ্রেণি", "৫ম শ্রেণি", "৬ষ্ঠ শ্রেণি", "৭ম শ্রেণি", "৮ম শ্রেণি", "৯ম শ্রেণি".
-Do not wrap in markdown code blocks.`;
-
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${settings.apiKey}`;
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: uploadedImageMime, data: uploadedImageBase64 } }] }]
-                    })
-                });
-                const data = await res.json();
-                if (data.error) throw new Error(data.error.message);
-
-                let rawText = data.candidates[0].content.parts[0].text.trim().replace(/```json/g, '').replace(/```/g, '').trim();
-                const parsed = JSON.parse(rawText);
-
-                if (parsed.formNo) document.getElementById('formNo').value = parsed.formNo;
-                if (parsed.nameBn) document.getElementById('nameBn').value = parsed.nameBn;
-                if (parsed.nameEn) document.getElementById('nameEn').value = parsed.nameEn;
-                if (parsed.fatherName) document.getElementById('fatherName').value = parsed.fatherName;
-                if (parsed.motherName) document.getElementById('motherName').value = parsed.motherName;
-                if (parsed.dob) document.getElementById('dob').value = parsed.dob;
-                if (parsed.birthReg) document.getElementById('birthReg').value = parsed.birthReg;
-                if (parsed.targetClass) document.getElementById('targetClass').value = parsed.targetClass;
-                if (parsed.phone) document.getElementById('phone').value = parsed.phone;
-                if (parsed.address) document.getElementById('address').value = parsed.address;
-
-                alert('তথ্য সফলভাবে স্ক্যান হয়েছে!');
-            } catch (err) {
-                alert('স্ক্যান করতে সমস্যা হয়েছে: ' + err.message);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        function generateClassRoll(cls) {
-            const classStudents = students.filter(s => s.targetClass === cls);
-            let base = 1000;
-            if (cls.includes('২য়')) base = 2000;
-            else if (cls.includes('৩য়')) base = 3000;
-            else if (cls.includes('৪র্থ')) base = 4000;
-            else if (cls.includes('৫ম')) base = 5000;
-            else if (cls.includes('৬ষ্ঠ')) base = 6000;
-            else if (cls.includes('৭ম')) base = 7000;
-            else if (cls.includes('৮ম')) base = 8000;
-            else if (cls.includes('৯ম')) base = 9000;
-
-            return (base + classStudents.length + 1).toString();
-        }
-
-        function saveStudent(e) {
+        function submitPublicForm(e) {
             e.preventDefault();
-            const editId = document.getElementById('edit-id').value;
-            const cls = document.getElementById('targetClass').value;
-            let rollVal = document.getElementById('examRoll').value.trim();
-            if (!rollVal) rollVal = generateClassRoll(cls);
-
-            const existing = editId ? students.find(s => s.id === editId) : null;
-
-            const studentObj = {
-                id: editId ? editId : Date.now().toString(),
-                formNo: document.getElementById('formNo').value.trim(),
-                examRoll: rollVal,
-                targetClass: cls,
-                nameBn: document.getElementById('nameBn').value.trim(),
-                nameEn: document.getElementById('nameEn').value.trim(),
-                fatherName: document.getElementById('fatherName').value.trim(),
-                motherName: document.getElementById('motherName').value.trim(),
-                dob: document.getElementById('dob').value.trim(),
-                birthReg: document.getElementById('birthReg').value.trim(),
-                phone: document.getElementById('phone').value.trim(),
-                address: document.getElementById('address').value.trim(),
-                sub1: existing ? existing.sub1 : '',
-                sub2: existing ? existing.sub2 : '',
-                sub3: existing ? existing.sub3 : '',
-                allocatedSection: existing ? (existing.allocatedSection || '') : '',
-                sectionRoll: existing ? (existing.sectionRoll || '') : ''
-            };
-
-            if (editId) {
-                const idx = students.findIndex(s => s.id === editId);
-                students[idx] = studentObj;
-                alert('তথ্য আপডেট করা হয়েছে!');
-            } else {
-                students.push(studentObj);
-                alert(`সফলভাবে সংরক্ষিত! পরীক্ষার রোল: ${rollVal}`);
+            let formNoInput = document.getElementById('pub-formNo').value.trim();
+            if (!formNoInput) {
+                formNoInput = 'MHS-' + Math.floor(1000 + Math.random() * 9000);
             }
 
+            const student = {
+                id: Date.now().toString(),
+                formNo: formNoInput,
+                examRoll: '', 
+                isPaid: false, 
+                targetClass: document.getElementById('pub-targetClass').value,
+                nameBn: document.getElementById('pub-nameBn').value.trim(),
+                nameEn: document.getElementById('pub-nameEn').value.trim(),
+                fatherName: document.getElementById('pub-fatherName').value.trim(),
+                fatherPhone: document.getElementById('pub-fatherPhone').value.trim(),
+                motherName: document.getElementById('pub-motherName').value.trim(),
+                motherPhone: document.getElementById('pub-motherPhone').value.trim(),
+                permAddress: document.getElementById('pub-permAddress').value.trim(),
+                currAddress: document.getElementById('pub-currAddress').value.trim(),
+                guardianInfo: document.getElementById('pub-guardianInfo').value.trim(),
+                lastClass: document.getElementById('pub-lastClass').value.trim(),
+                prevSchool: document.getElementById('pub-prevSchool').value.trim(),
+                tcNo: document.getElementById('pub-tcNo').value.trim(),
+                religion: document.getElementById('pub-religion').value.trim(),
+                nationality: document.getElementById('pub-nationality').value.trim(),
+                dob: document.getElementById('pub-dob').value.trim(),
+                birthReg: document.getElementById('pub-birthReg').value.trim(),
+                prevResult: document.getElementById('pub-prevResult').value.trim(),
+                annualIncome: document.getElementById('pub-annualIncome').value.trim(),
+                sub1: '', sub2: '', sub3: '', allocatedSection: '', sectionRoll: ''
+            };
+
+            students.push(student);
             localStorage.setItem('admission_students', JSON.stringify(students));
-            resetForm();
-            updateDashboard();
-            renderStudentTable();
+            alert('ফরম সফলভাবে সাবমিট হয়েছে! এখন প্রিন্ট পেজ ওপেন হচ্ছে...');
+            printSingleAdmissionForm(student.id);
+            resetPublicForm();
+            togglePublicForm(false);
         }
 
-        function resetForm() {
-            document.getElementById('student-form').reset();
-            document.getElementById('edit-id').value = '';
-            document.getElementById('preview-img').style.display = 'none';
-            document.getElementById('upload-placeholder').style.display = 'block';
-            uploadedImageBase64 = null;
-        }
+        function resetPublicForm() { document.getElementById('pub-student-form').reset(); }
 
-        function editStudent(id) {
+        function togglePaymentStatus(id) {
             const s = students.find(st => st.id === id);
-            if (!s) return;
-            document.getElementById('edit-id').value = s.id;
-            document.getElementById('formNo').value = s.formNo;
-            document.getElementById('examRoll').value = s.examRoll;
-            document.getElementById('targetClass').value = s.targetClass;
-            document.getElementById('nameBn').value = s.nameBn;
-            document.getElementById('nameEn').value = s.nameEn;
-            document.getElementById('fatherName').value = s.fatherName;
-            document.getElementById('motherName').value = s.motherName;
-            document.getElementById('dob').value = s.dob;
-            document.getElementById('birthReg').value = s.birthReg;
-            document.getElementById('phone').value = s.phone;
-            document.getElementById('address').value = s.address;
-            switchTab('admission-entry', document.querySelectorAll('.nav-link')[1]);
-        }
-
-        function deleteStudent(id) {
-            if (!confirm('আপনি কি নিশ্চিতভাবে এই তথ্যটি মুছে ফেলতে চান?')) return;
-            students = students.filter(s => s.id !== id);
-            localStorage.setItem('admission_students', JSON.stringify(students));
-            renderStudentTable();
-            updateDashboard();
+            if (s) {
+                s.isPaid = !s.isPaid;
+                localStorage.setItem('admission_students', JSON.stringify(students));
+                renderStudentTable();
+                updateDashboard();
+            }
         }
 
         function autoAssignClassRolls() {
@@ -1292,7 +1122,7 @@ Do not wrap in markdown code blocks.`;
 
                 let c = 1;
                 students.forEach(s => {
-                    if (s.targetClass === cls) {
+                    if (s.targetClass === cls && s.isPaid && !s.examRoll) {
                         s.examRoll = (base + c).toString();
                         c++;
                     }
@@ -1300,19 +1130,13 @@ Do not wrap in markdown code blocks.`;
             });
             localStorage.setItem('admission_students', JSON.stringify(students));
             renderStudentTable();
-            alert('শ্রেণিভিত্তিক রোল জেনারেট করা হয়েছে!');
+            alert('ফি পরিশোধিত শিক্ষার্থীদের রোল জেনারেট সম্পন্ন হয়েছে!');
         }
 
         function updateDashboard() {
             document.getElementById('stat-total').innerText = students.length;
+            document.getElementById('stat-paid').innerText = students.filter(s => s.isPaid).length;
             document.getElementById('stat-rolled').innerText = students.filter(s => s.examRoll).length;
-            const passed = students.filter(s => {
-                if (s.sub1 === '' || s.sub2 === '' || s.sub3 === '') return false;
-                const total = parseFloat(s.sub1) + parseFloat(s.sub2) + parseFloat(s.sub3);
-                const passMark = (s.targetClass.includes('২য়') || s.targetClass.includes('৩য়')) ? 20 : 40;
-                return total >= passMark;
-            }).length;
-            document.getElementById('stat-passed').innerText = passed;
         }
 
         function renderStudentTable() {
@@ -1323,231 +1147,198 @@ Do not wrap in markdown code blocks.`;
 
             const filtered = students.filter(s => {
                 const matchClass = filterCls ? s.targetClass === filterCls : true;
-                const matchQuery = s.nameBn.toLowerCase().includes(query) || s.examRoll.toLowerCase().includes(query) || s.formNo.toLowerCase().includes(query);
+                const matchQuery = s.nameBn.toLowerCase().includes(query) || s.formNo.toLowerCase().includes(query);
                 return matchClass && matchQuery;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted);">কোনো ডেটা পাওয়া যায়নি</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">কোনো ডেটা পাওয়া যায়নি</td></tr>`;
                 return;
             }
 
             filtered.forEach(s => {
+                const payBadge = s.isPaid 
+                    ? `<button class="btn btn-success" style="padding:4px 10px; font-size:12px;" onclick="togglePaymentStatus('${s.id}')"><i class="fa-solid fa-check-circle"></i> পেইড (Paid)</button>`
+                    : `<button class="btn btn-warning" style="padding:4px 10px; font-size:12px;" onclick="togglePaymentStatus('${s.id}')"><i class="fa-solid fa-clock"></i> বাকি (Unpaid)</button>`;
+
                 tbody.innerHTML += `
                     <tr>
                         <td><b>${s.formNo}</b></td>
-                        <td><span style="color: var(--primary); font-weight:700;">${s.examRoll || 'নেই'}</span></td>
+                        <td><span style="color:var(--primary); font-weight:700;">${s.examRoll || 'অপেক্ষমাণ'}</span></td>
                         <td>${s.targetClass}</td>
-                        <td><b>${s.nameBn}</b><br><small style="color:var(--text-muted)">${s.nameEn}</small></td>
-                        <td>পিতা: ${s.fatherName}<br><small style="color:var(--text-muted)">মাতা: ${s.motherName}</small></td>
-                        <td>${s.dob}<br><small style="color:var(--text-muted)">${s.birthReg}</small></td>
-                        <td>${s.phone}</td>
+                        <td><b>${s.nameBn}</b></td>
+                        <td>${s.fatherName}<br><small>${s.fatherPhone}</small></td>
+                        <td>${payBadge}</td>
                         <td>
-                            <button class="btn btn-outline" style="padding:4px 8px;" onclick="printSingleAdmit('${s.id}')" title="প্রবেশপত্র"><i class="fa-solid fa-id-card"></i></button>
-                            <button class="btn btn-primary" style="padding:4px 8px;" onclick="editStudent('${s.id}')" title="এডিট"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteStudent('${s.id}')" title="ডিলিট"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-outline" style="padding:4px 8px;" onclick="printSingleAdmissionForm('${s.id}')" title="ফরম প্রিন্ট"><i class="fa-solid fa-file-lines"></i></button>
+                            <button class="btn btn-primary" style="padding:4px 8px;" onclick="printSingleAdmitDual('${s.id}')" title="প্রবেশপত্র ও পেমেন্ট কপি"><i class="fa-solid fa-id-card"></i></button>
+                            <button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteStudent('${s.id}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // ================= RESULTS & ZIG-ZAG SECTION DISTRIBUTION (ONLY FOR 6TH CLASS) =================
-        function onResultClassChange() {
-            const cls = document.getElementById('result-class-filter').value;
-            const btnAutoSec = document.getElementById('btn-auto-section');
-            const thSecHeader = document.getElementById('th-section-header');
-
-            if (cls === '৬ষ্ঠ শ্রেণি') {
-                btnAutoSec.style.display = 'inline-flex';
-                thSecHeader.style.display = 'table-cell';
-            } else {
-                btnAutoSec.style.display = 'none';
-                thSecHeader.style.display = 'none';
-            }
-            renderResultTable();
-        }
-
-        function renderResultTable() {
-            const cls = document.getElementById('result-class-filter').value;
-            const isJunior = cls.includes('২য়') || cls.includes('৩য়');
-            const isSixth = (cls === '৬ষ্ঠ শ্রেণি');
-            
-            document.getElementById('th-sub1').innerText = isJunior ? 'বাংলা (১৫)' : 'বাংলা (৩০)';
-            document.getElementById('th-sub2').innerText = isJunior ? 'ইংরেজি (১৫)' : 'ইংরেজি (৩০)';
-            document.getElementById('th-sub3').innerText = isJunior ? 'গণিত (২০)' : 'গণিত (৪০)';
-
-            document.getElementById('btn-auto-section').style.display = isSixth ? 'inline-flex' : 'none';
-            document.getElementById('th-section-header').style.display = isSixth ? 'table-cell' : 'none';
-
-            const tbody = document.getElementById('result-table-body');
-            tbody.innerHTML = '';
-
-            const classStudents = students.filter(s => s.targetClass === cls);
-            classStudents.sort((a, b) => {
-                const tA = (parseFloat(a.sub1)||0) + (parseFloat(a.sub2)||0) + (parseFloat(a.sub3)||0);
-                const tB = (parseFloat(b.sub1)||0) + (parseFloat(b.sub2)||0) + (parseFloat(b.sub3)||0);
-                return tB - tA;
-            });
-
-            if (classStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="${isSixth ? 10 : 9}" style="text-align:center; color: var(--text-muted);">এই শ্রেণিতে কোনো শিক্ষার্থী নেই</td></tr>`;
-                return;
-            }
-
-            classStudents.forEach((s, index) => {
-                const hasMarks = s.sub1 !== '' && s.sub2 !== '' && s.sub3 !== '';
-                const total = hasMarks ? (parseFloat(s.sub1) + parseFloat(s.sub2) + parseFloat(s.sub3)) : '';
-                const passMark = isJunior ? 20 : 40;
-                const isPass = hasMarks && total >= passMark;
-
-                let secTD = '';
-                if (isSixth) {
-                    const secDisplay = s.allocatedSection 
-                        ? `<span style="background:rgba(37,99,235,0.12); color:var(--accent); padding:3px 10px; border-radius:8px; font-weight:700;">${s.allocatedSection} (রোল: ${s.sectionRoll})</span>` 
-                        : `<span style="color:var(--text-muted); font-size:12px;">বণ্টন হয়নি</span>`;
-                    secTD = `<td>${secDisplay}</td>`;
-                }
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${hasMarks && isPass ? index + 1 : '-'}</b></td>
-                        <td>${s.formNo}</td>
-                        <td><b>${s.examRoll}</b></td>
-                        <td>${s.nameBn}</td>
-                        <td><input type="number" step="0.5" value="${s.sub1}" style="width:70px; padding:6px;" onchange="updateSubMarks('${s.id}', 'sub1', this.value)"></td>
-                        <td><input type="number" step="0.5" value="${s.sub2}" style="width:70px; padding:6px;" onchange="updateSubMarks('${s.id}', 'sub2', this.value)"></td>
-                        <td><input type="number" step="0.5" value="${s.sub3}" style="width:70px; padding:6px;" onchange="updateSubMarks('${s.id}', 'sub3', this.value)"></td>
-                        <td><b>${total}</b></td>
-                        <td>
-                            ${!hasMarks ? '<span class="status-badge status-pending">অপেক্ষমাণ</span>' : (isPass ? '<span class="status-badge status-pass">উত্তীর্ণ</span>' : '<span class="status-badge status-fail">অনুত্তীর্ণ</span>')}
-                        </td>
-                        ${secTD}
-                    </tr>
-                `;
-            });
-        }
-
-        function updateSubMarks(id, sub, val) {
-            const s = students.find(st => st.id === id);
-            if (s) {
-                s[sub] = val;
-                localStorage.setItem('admission_students', JSON.stringify(students));
-                renderResultTable();
-                updateDashboard();
-            }
-        }
-
-        function autoDistributeSections() {
-            const cls = '৬ষ্ঠ শ্রেণি';
-            const passMark = 40;
-
-            const classStudents = students.filter(s => s.targetClass === cls);
-            classStudents.forEach(s => {
-                s.allocatedSection = '';
-                s.sectionRoll = '';
-            });
-
-            const passedStudents = classStudents.filter(s => {
-                if (s.sub1 === '' || s.sub2 === '' || s.sub3 === '') return false;
-                const total = parseFloat(s.sub1) + parseFloat(s.sub2) + parseFloat(s.sub3);
-                return total >= passMark;
-            }).sort((a, b) => {
-                const tA = parseFloat(a.sub1) + parseFloat(a.sub2) + parseFloat(a.sub3);
-                const tB = parseFloat(b.sub1) + parseFloat(b.sub2) + parseFloat(b.sub3);
-                return tB - tA;
-            });
-
-            if (passedStudents.length === 0) {
-                return alert('শাখা বণ্টনের জন্য ষষ্ঠ শ্রেণিতে কোনো উত্তীর্ণ শিক্ষার্থী পাওয়া যায়নি!');
-            }
-
-            let kaRoll = 1;
-            let khaRoll = 1;
-
-            passedStudents.forEach((s, index) => {
-                if (index % 2 === 0) {
-                    s.allocatedSection = 'ক শাখা';
-                    s.sectionRoll = kaRoll++;
-                } else {
-                    s.allocatedSection = 'খ শাখা';
-                    s.sectionRoll = khaRoll++;
-                }
-            });
-
+        function deleteStudent(id) {
+            if (!confirm('মুছে ফেলতে চান?')) return;
+            students = students.filter(s => s.id !== id);
             localStorage.setItem('admission_students', JSON.stringify(students));
-            renderResultTable();
-            alert(`ষষ্ঠ শ্রেণীর জন্য মেধাক্রম অনুযায়ী ${passedStudents.length} জন শিক্ষার্থীকে ক শাখা ও খ শাখায় সফলভাবে বণ্টন করা হয়েছে!`);
+            renderStudentTable(); updateDashboard();
         }
 
-        // ================= PRINT GENERATORS =================
-        function getStudentsForPrint() {
-            const selectedClass = document.getElementById('print-class-select').value;
-            if (selectedClass === 'ALL') return students;
-            return students.filter(s => s.targetClass === selectedClass);
-        }
-
+        // ================= PRINT PDF BUILDERS (COMPACT FULL FIT FORM) =================
         function triggerPrint(html) {
             document.getElementById('print-area').innerHTML = html;
             window.print();
         }
 
-        function buildAdmitHTML(s) {
+        function buildAdmissionFormHTML(s) {
+            const logoSrc = settings.customLogo || 'logo.jpg';
             return `
-                <div class="admit-card">
-                    <div class="admit-header">
-                        <h2>${settings.schoolName}</h2>
-                        <div class="sub-info">${settings.schoolAddress} ${settings.estd ? '| ' + settings.estd : ''}</div>
-                        <div class="admit-exam-year">ভর্তি পরীক্ষা - ${settings.session}</div>
-                        <div class="admit-badge">প্রবেশপত্র</div>
-                    </div>
-
-                    <div class="admit-body">
-                        <div class="admit-details">
-                            <div class="admit-row">
-                                <span><b>ভর্তি পরীক্ষার রোল:</b></span>
-                                <span class="admit-roll-box">${s.examRoll}</span>
-                                <span><b>ফর্ম নং:</b> ${s.formNo}</span>
-                            </div>
-                            <div class="admit-row">
-                                <span><b>শিক্ষার্থীর নাম:</b> ${s.nameBn} ${s.nameEn ? '(' + s.nameEn + ')' : ''}</span>
-                            </div>
-                            <div class="admit-row">
-                                <span><b>পিতার নাম:</b> ${s.fatherName} &nbsp;&nbsp;|&nbsp;&nbsp; <b>মাতার নাম:</b> ${s.motherName}</span>
-                            </div>
-                            <div class="admit-row">
-                                <span><b>ভর্তিচ্ছু শ্রেণি:</b> <b>${s.targetClass}</b></span>
-                            </div>
-                            <div class="admit-date-box">
-                                <span><b>পরীক্ষার তারিখ:</b> ${settings.examDate}</span>
-                                <span><b>পরীক্ষা আরম্ভের সময়:</b> ${settings.examTime}</span>
+                <div class="print-admission-page">
+                    <div>
+                        <div class="print-school-header">
+                            <img src="${logoSrc}" onerror="this.style.display='none'" alt="Logo">
+                            <h1>${settings.schoolName}</h1>
+                            <p>${settings.schoolAddress} | ${settings.estd}</p>
+                            <div class="print-form-title">ভর্তির আবেদন ফরম (শিক্ষাবর্ষ - ${settings.session})</div>
+                            <div style="position: absolute; right: 4px; top: 1px; border: 1px solid #000; padding: 2px 6px; font-weight: bold; font-size:10px;">
+                                ফরম নং: ${s.formNo}
                             </div>
                         </div>
-                        <div class="photo-box">পাসপোর্ট সাইজের<br>ছবি</div>
+
+                        <div style="margin-top: 4px;">
+                            <div class="print-grid-row"><span class="print-label">১. শিক্ষার্থীর নাম (বাংলায়) (জন্ম নিবন্ধন অনুযায়ী):</span><span class="print-field">${s.nameBn || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">&nbsp;&nbsp;&nbsp; ইংরেজিতে (বড় অক্ষরে):</span><span class="print-field">${s.nameEn || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">২. পিতার নাম (NID অনুযায়ী):</span><span class="print-field">${s.fatherName || ''}</span><span class="print-label">পিতার মোবাইল নং:</span><span class="print-field" style="flex:0.6;">${s.fatherPhone || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৩. মাতার নাম (NID অনুযায়ী):</span><span class="print-field">${s.motherName || ''}</span><span class="print-label">মাতার মোবাইল নং:</span><span class="print-field" style="flex:0.6;">${s.motherPhone || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৪. স্থায়ী ঠিকানা:</span><span class="print-field">${s.permAddress || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৫. বর্তমান ঠিকানা / যোগাযোগের ঠিকানা:</span><span class="print-field">${s.currAddress || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৬. পিতা জীবিত না থাকলে আইনানুগ অভিভাবকের নাম ও ঠিকানা:</span><span class="print-field">${s.guardianInfo || 'প্রযোজ্য নয়'}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৭. সর্বশেষ কোন শ্রেণীতে অধ্যয়ন করেছে:</span><span class="print-field">${s.lastClass || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৮. বিদ্যালয়ের নাম ও ঠিকানা:</span><span class="print-field">${s.prevSchool || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">৯. বদলী সনদ নং ও তারিখ:</span><span class="print-field">${s.tcNo || 'প্রযোজ্য নয়'}</span></div>
+                            <div class="print-grid-row"><span class="print-label">১০. বর্তমানে কোন শ্রেণীতে ভর্তি হতে ইচ্ছুক:</span><span class="print-field" style="font-weight:700; color:#dc2626;">${s.targetClass || ''}</span><span class="print-label">ধর্ম:</span><span class="print-field" style="flex:0.4;">${s.religion || ''}</span><span class="print-label">জাতীয়তা:</span><span class="print-field" style="flex:0.4;">${s.nationality || 'বাংলাদেশী'}</span></div>
+                            <div class="print-grid-row"><span class="print-label">১১. জন্ম তারিখ:</span><span class="print-field">${s.dob || ''}</span><span class="print-label">বয়স (১ জানুয়ারি):</span><span class="print-field" style="flex:0.6;">নির্ধারিত</span></div>
+                            <div class="print-grid-row"><span class="print-label">১২. গত বার্ষিক পরীক্ষায় প্রাপ্ত নম্বর / গ্রেড:</span><span class="print-field">${s.prevResult || ''}</span></div>
+                            <div class="print-grid-row"><span class="print-label">১৩. ক) জমির পরিমাণ:</span><span class="print-field">${s.annualIncome || ''}</span></div>
+                        </div>
+
+                        <div class="instructions-box">
+                            <b>১৪. সংযুক্তি:</b> (১) শিক্ষার্থীর ৫ কপি এবং পিতা-মাতার ২ কপি পাসপোর্ট সাইজের ছবি। (২) শিক্ষার্থীর বাংলা ও ইংরেজি Online জন্ম নিবন্ধনের ফোটোকপি। (৩) পিতা ও মাতার NID এর ফোটোকপি। (৪) ৫ম শ্রেণির মূল প্রশংসাপত্র। (৫) ৭ম-৯ম শ্রেণির ছাড়পত্র ও বার্ষিক পরীক্ষার বিবরণী।
+                        </div>
+
+                        <div class="declaration-box">
+                            <div style="flex:1;">আমি স্বীকার করিতেছি যে, উপযুক্ত বিবরণ সত্য। আমি অঙ্গিকার করিতেছি যে, আমার কন্যা/পোয্য অত্র বিদ্যালয়ে অধ্যয়নকালীন প্রতিষ্ঠানের যাবতীয় আইন-কানুন মানিয়া চলিতে বাধ্য থাকিব।</div>
+                            <div style="flex:1; border-left:1px solid #000; padding-left:4px;">আমি সর্বতোভাবে স্বীকার করিতেছি যে, উপরে বর্ণিত বিবরণ সত্য এবং ভর্তি হওয়ার পর বিদ্যালয়ের সমস্ত আইন-কানুন মানিয়া চলিতে বাধ্য থাকিব।</div>
+                        </div>
                     </div>
 
-                    <div class="admit-footer">
-                        <div class="sign-line">পরীক্ষার্থীর স্বাক্ষর</div>
-                        <div class="sign-line">প্রধান শিক্ষকের স্বাক্ষর ও তাং</div>
+                    <div>
+                        <!-- Parent & Student Signature Area Only (Teacher/Office Use Section Completely Removed) -->
+                        <div class="signature-area">
+                            <div class="sign-line">পিতা/অভিভাবকের স্বাক্ষর ও তাং</div>
+                            <div class="sign-line">ছাত্রীর স্বাক্ষর ও তাং</div>
+                        </div>
                     </div>
                 </div>
             `;
         }
 
-        function printSingleAdmit(id) {
+        function buildAdmitSingleHTML(s, isPaymentCopy = false) {
+            const logoSrc = settings.customLogo || 'logo.jpg';
+            const titleText = isPaymentCopy ? `ভর্তি পরীক্ষার ফি রশিদ ও অফিস কপি - ${settings.session}` : `ভর্তি পরীক্ষার প্রবেশপত্র - ${settings.session}`;
+            const sealText = isPaymentCopy ? `<div style="position:absolute; right:35px; top:15px; border:2px solid #10b981; color:#10b981; padding:4px 12px; font-weight:800; font-size:14px; transform:rotate(-10deg); border-radius:6px; background:rgba(16,185,129,0.05);">PAID / পরিশোধিত</div>` : '';
+
+            return `
+                <div class="admit-single-section">
+                    ${sealText}
+                    <div>
+                        <div class="print-school-header">
+                            <img src="${logoSrc}" onerror="this.style.display='none'" alt="Logo">
+                            <h1>${settings.schoolName}</h1>
+                            <p>${settings.schoolAddress} | ${settings.estd}</p>
+                            <div class="print-form-title">${titleText}</div>
+                        </div>
+
+                        <div style="border: 1.2px solid #000; padding: 10px 14px; margin: 10px 0; background: #fafafa;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1; font-size: 13px; line-height: 1.8;">
+                                    <div><b>ভর্তি পরীক্ষার রোল নম্বর:</b> <span style="font-size:18px; border:2px solid #000; padding:1px 12px; margin-left:6px; font-weight:800; background:#fff;">${s.examRoll || 'অপেক্ষমাণ'}</span></div>
+                                    <div><b>ফরম নম্বর:</b> ${s.formNo} &nbsp;&nbsp;|&nbsp;&nbsp; <b>শ্রেণি:</b> ${s.targetClass}</div>
+                                    <div><b>শিক্ষার্থীর নাম:</b> ${s.nameBn}</div>
+                                    <div><b>পিতার নাম:</b> ${s.fatherName} &nbsp;&nbsp;|&nbsp;&nbsp; <b>মাতার নাম:</b> ${s.motherName}</div>
+                                    <div style="margin-top:8px; border-top:1px dashed #000; padding-top:6px; font-size:13.5px; font-weight:700; color:#dc2626;">
+                                        পরীক্ষার তারিখ: ${settings.examDate} | সময়: ${settings.examTime}
+                                    </div>
+                                </div>
+                                <div style="width: 95px; height: 115px; border: 1.2px solid #000; display: flex; align-items: center; justify-content: center; text-align:center; font-size:10.5px; background:#fff; font-weight:600;">
+                                    পাসপোর্ট ছবি
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="font-size: 10.5px; border: 1px solid #000; padding: 6px 10px; background: #fff; line-height: 1.4;">
+                            <b>${isPaymentCopy ? 'অফিসিয়াল নোট:' : 'পরীক্ষার্থীদের জন্য নির্দেশাবলী:'}</b> ${isPaymentCopy ? 'এই কপিটি অফিস কর্তৃক সংরক্ষিত হবে এবং ফরম ফি বাবদ ' + settings.admissionFee + ' জমাদানের প্রমাণপত্র হিসেবে গণ্য হবে।' : 'পরীক্ষার দিন অবশ্যই এই প্রবেশপত্রটি সাথে আনতে হবে। পরীক্ষা শুরুর ৩০ মিনিট পূর্বে নির্দিষ্ট আসনে বসতে হবে।'}
+                        </div>
+                    </div>
+
+                    <div class="signature-area" style="margin-top: 15px;">
+                        <div class="sign-line" style="width: 170px;">সহকারী প্রধান শিক্ষকের স্বাক্ষর</div>
+                        <div class="sign-line" style="width: 170px;">প্রধান শিক্ষকের স্বাক্ষর</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function printSingleAdmissionForm(id) {
             const s = students.find(st => st.id === id);
-            if (s) triggerPrint(buildAdmitHTML(s));
+            if (s) triggerPrint(buildAdmissionFormHTML(s));
+        }
+
+        function printSingleAdmitDual(id) {
+            const s = students.find(st => st.id === id);
+            if (s) {
+                if (!s.isPaid || !s.examRoll) {
+                    alert('সতর্কতা: এই শিক্ষার্থীর ফি জমা হয়নি অথবা রোল নম্বর বরাদ্দ করা হয়নি!');
+                    return;
+                }
+                const dualHTML = `
+                    <div class="print-admit-dual-container">
+                        ${buildAdmitSingleHTML(s, false)}
+                        <div class="cut-divider"><span>✂️ এখানে কেটে আলাদা করুন (অফিস ও পেমেন্ট কপি) ✂️</span></div>
+                        ${buildAdmitSingleHTML(s, true)}
+                    </div>
+                `;
+                triggerPrint(dualHTML);
+            }
+        }
+
+        function printAdmissionForms() {
+            const selectedClass = document.getElementById('print-class-select').value;
+            const list = selectedClass === 'ALL' ? students : students.filter(s => s.targetClass === selectedClass);
+            if (list.length === 0) return alert('কোনো শিক্ষার্থী নেই!');
+            triggerPrint(list.map(s => buildAdmissionFormHTML(s)).join(''));
         }
 
         function printAdmitCards() {
-            const list = getStudentsForPrint();
-            if (list.length === 0) return alert('নির্বাচিত শ্রেণিতে কোনো শিক্ষার্থীর তথ্য নেই!');
-            triggerPrint(list.map(s => buildAdmitHTML(s)).join(''));
+            const selectedClass = document.getElementById('print-class-select').value;
+            const list = (selectedClass === 'ALL' ? students : students.filter(s => s.targetClass === selectedClass)).filter(s => s.isPaid && s.examRoll);
+            if (list.length === 0) return alert('ফি পরিশোধিত ও রোল প্রাপ্ত কোনো শিক্ষার্থী পাওয়া যায়নি!');
+            
+            const dualCardsHTML = list.map(s => `
+                <div class="print-admit-dual-container">
+                    ${buildAdmitSingleHTML(s, false)}
+                    <div class="cut-divider"><span>✂️ এখানে কেটে আলাদা করুন (অফিস ও পেমেন্ট কপি) ✂️</span></div>
+                    ${buildAdmitSingleHTML(s, true)}
+                </div>
+            `).join('');
+            triggerPrint(dualCardsHTML);
         }
 
         function printSeatLabels() {
-            const list = getStudentsForPrint();
-            if (list.length === 0) return alert('নির্বাচিত শ্রেণিতে কোনো শিক্ষার্থীর তথ্য নেই!');
+            const list = getStudentsForPrint().filter(s => s.isPaid && s.examRoll);
+            if (list.length === 0) return alert('ফি পরিশোধিত ও রোল প্রাপ্ত শিক্ষার্থীর তথ্য নেই!');
             const boxes = list.map(s => `
                 <div class="seat-box">
                     <div class="seat-exam-title">ভর্তি পরীক্ষা - ${settings.session}</div>
@@ -1559,159 +1350,164 @@ Do not wrap in markdown code blocks.`;
             triggerPrint(`<div class="seat-grid">${boxes}</div>`);
         }
 
+        function getStudentsForPrint() {
+            const selectedClass = document.getElementById('print-class-select').value;
+            return selectedClass === 'ALL' ? students : students.filter(s => s.targetClass === selectedClass);
+        }
+
         function printSignatureSheet() {
             const selectedClass = document.getElementById('print-class-select').value;
-            if (selectedClass === 'ALL') {
-                return alert('উপস্থিতি ও স্বাক্ষর শিট প্রিন্ট করার জন্য উপরে নির্দিষ্ট একটি শ্রেণি (যেমন: ষষ্ঠ শ্রেণি) নির্বাচন করুন।');
-            }
-            const list = students.filter(s => s.targetClass === selectedClass);
-            if (list.length === 0) return alert(`${selectedClass}-তে কোনো শিক্ষার্থীর তথ্য নেই!`);
+            if (selectedClass === 'ALL') return alert('নির্দিষ্ট একটি শ্রেণি নির্বাচন করুন।');
+            const list = students.filter(s => s.targetClass === selectedClass && s.isPaid && s.examRoll);
+            if (list.length === 0) return alert('ফি পরিশোধিত কোনো শিক্ষার্থী নেই!');
 
             const rows = list.map((s, i) => `
                 <tr>
-                    <td style="text-align:center; width:45px;">${i + 1}</td>
-                    <td style="text-align:center; width:75px;">${s.formNo}</td>
-                    <td style="text-align:center; font-weight:bold; width:85px;">${s.examRoll}</td>
+                    <td style="text-align:center;">${i + 1}</td>
+                    <td style="text-align:center;">${s.formNo}</td>
+                    <td style="text-align:center; font-weight:bold;">${s.examRoll}</td>
                     <td><b>${s.nameBn}</b></td>
-                    <td>পিতা: ${s.fatherName}<br>মাতা: ${s.motherName}</td>
-                    <td style="width:150px; height:42px;"></td>
+                    <td>পিতা: ${s.fatherName}<br>মোবাইল: ${s.fatherPhone}</td>
+                    <td style="width:140px; height:40px;"></td>
                 </tr>
             `).join('');
 
             triggerPrint(`
-                <div class="print-header">
+                <div style="text-align:center; margin-bottom:15px;">
                     <h2>${settings.schoolName}</h2>
                     <div>${settings.schoolAddress}</div>
-                    <div class="exam-sub">ভর্তি পরীক্ষা - ${settings.session}</div>
-                    <div class="sheet-title">উপস্থিতি ও স্বাক্ষর শিট (${selectedClass})</div>
-                    <div style="font-size:13px; margin-top:4px;">পরীক্ষার তারিখ: ${settings.examDate} | সময়: ${settings.examTime}</div>
+                    <div style="font-size:15px; font-weight:bold; margin-top:4px;">ভর্তি পরীক্ষা উপস্থিতি ও স্বাক্ষর শিট (${selectedClass})</div>
+                    <div>তারিখ: ${settings.examDate} | সময়: ${settings.examTime}</div>
                 </div>
                 <table class="print-table">
-                    <thead>
-                        <tr>
-                            <th style="width:45px;">ক্রমিক</th>
-                            <th style="width:75px;">ফর্ম নং</th>
-                            <th style="width:85px;">রোল নং</th>
-                            <th>শিক্ষার্থীর নাম</th>
-                            <th>পিতা ও মাতার নাম</th>
-                            <th style="width:150px;">পরীক্ষার্থীর স্বাক্ষর</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ক্রমিক</th><th>ফরম নং</th><th>রোল</th><th>শিক্ষার্থীর নাম</th><th>পিতা ও মোবাইল</th><th>স্বাক্ষর</th></tr></thead>
                     <tbody>${rows}</tbody>
                 </table>
-                <div style="display:flex; justify-content:space-between; margin-top:45px; font-size:13px;">
-                    <div class="sign-line">কক্ষ পরিদর্শকের স্বাক্ষর</div>
+                <div style="display:flex; justify-content:space-between; margin-top:50px;">
+                    <div class="sign-line">সহকারী প্রধান শিক্ষকের স্বাক্ষর</div>
                     <div class="sign-line">প্রধান শিক্ষকের স্বাক্ষর</div>
                 </div>
             `);
         }
 
+        function renderResultTable() {
+            const cls = document.getElementById('result-class-filter').value;
+            const isSixth = (cls === '৬ষ্ঠ শ্রেণি');
+            document.getElementById('btn-auto-section').style.display = isSixth ? 'inline-flex' : 'none';
+            document.getElementById('th-section-header').style.display = isSixth ? 'table-cell' : 'none';
+
+            const tbody = document.getElementById('result-table-body');
+            tbody.innerHTML = '';
+
+            const classStudents = students.filter(s => s.targetClass === cls && s.isPaid);
+            classStudents.sort((a, b) => ((parseFloat(b.sub1)||0)+(parseFloat(b.sub2)||0)+(parseFloat(b.sub3)||0)) - ((parseFloat(a.sub1)||0)+(parseFloat(a.sub2)||0)+(parseFloat(a.sub3)||0)));
+
+            if (classStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${isSixth ? 10 : 9}" style="text-align:center;">ফি পরিশোধিত কোনো শিক্ষার্থী নেই</td></tr>`;
+                return;
+            }
+
+            classStudents.forEach((s, index) => {
+                const hasMarks = s.sub1 !== '' && s.sub2 !== '' && s.sub3 !== '';
+                const total = hasMarks ? (parseFloat(s.sub1) + parseFloat(s.sub2) + parseFloat(s.sub3)) : '';
+                const isPass = hasMarks && total >= 40;
+
+                let secTD = isSixth ? `<td>${s.allocatedSection ? `${s.allocatedSection} (রোল: ${s.sectionRoll})` : '-'}</td>` : '';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${hasMarks && isPass ? index + 1 : '-'}</b></td>
+                        <td>${s.formNo}</td>
+                        <td><b>${s.examRoll || 'নেই'}</b></td>
+                        <td>${s.nameBn}</td>
+                        <td><input type="number" value="${s.sub1}" style="width:65px;" onchange="updateSubMarks('${s.id}', 'sub1', this.value)"></td>
+                        <td><input type="number" value="${s.sub2}" style="width:65px;" onchange="updateSubMarks('${s.id}', 'sub2', this.value)"></td>
+                        <td><input type="number" value="${s.sub3}" style="width:65px;" onchange="updateSubMarks('${s.id}', 'sub3', this.value)"></td>
+                        <td><b>${total}</b></td>
+                        <td>${!hasMarks ? '<span class="status-badge status-pending">অপেক্ষমাণ</span>' : (isPass ? '<span class="status-badge status-pass">উত্তীর্ণ</span>' : '<span class="status-badge status-fail">অনুত্তীর্ণ</span>')}</td>
+                        ${secTD}
+                    </tr>
+                `;
+            });
+        }
+
+        function updateSubMarks(id, sub, val) {
+            const s = students.find(st => st.id === id);
+            if (s) { s[sub] = val; localStorage.setItem('admission_students', JSON.stringify(students)); renderResultTable(); updateDashboard(); }
+        }
+
+        function autoDistributeSections() {
+            const classStudents = students.filter(s => s.targetClass === '৬ষ্ঠ শ্রেণি' && s.isPaid);
+            classStudents.forEach(s => { s.allocatedSection = ''; s.sectionRoll = ''; });
+
+            const passedStudents = classStudents.filter(s => {
+                if (!s.sub1 || !s.sub2 || !s.sub3) return false;
+                return (parseFloat(s.sub1)+parseFloat(s.sub2)+parseFloat(s.sub3)) >= 40;
+            }).sort((a, b) => ((parseFloat(b.sub1)||0)+(parseFloat(b.sub2)||0)+(parseFloat(b.sub3)||0)) - ((parseFloat(a.sub1)||0)+(parseFloat(a.sub2)||0)+(parseFloat(a.sub3)||0)));
+
+            if (passedStudents.length === 0) return alert('উত্তীর্ণ শিক্ষার্থী পাওয়া যায়নি!');
+
+            let kaRoll = 1, khaRoll = 1;
+            passedStudents.forEach((s, index) => {
+                if (index % 2 === 0) { s.allocatedSection = 'ক শাখা'; s.sectionRoll = kaRoll++; }
+                else { s.allocatedSection = 'খ শাখা'; s.sectionRoll = khaRoll++; }
+            });
+
+            localStorage.setItem('admission_students', JSON.stringify(students));
+            renderResultTable();
+            alert('ষষ্ঠ শ্রেণির শিক্ষার্থীদের ক ও খ শাখায় সফলভাবে বণ্টন করা হয়েছে!');
+        }
+
         function printMeritList() {
             const cls = document.getElementById('result-class-filter').value;
             const isSixth = (cls === '৬ষ্ঠ শ্রেণি');
-            const classStudents = students.filter(s => s.targetClass === cls);
-            if (classStudents.length === 0) return alert('এই শ্রেণিতে কোনো শিক্ষার্থী নেই!');
+            const classStudents = students.filter(s => s.targetClass === cls && s.isPaid);
+            if (classStudents.length === 0) return alert('কোনো শিক্ষার্থী নেই!');
 
             classStudents.sort((a, b) => ((parseFloat(b.sub1)||0)+(parseFloat(b.sub2)||0)+(parseFloat(b.sub3)||0)) - ((parseFloat(a.sub1)||0)+(parseFloat(a.sub2)||0)+(parseFloat(a.sub3)||0)));
 
             const rows = classStudents.map((s, i) => {
                 const total = (parseFloat(s.sub1)||0) + (parseFloat(s.sub2)||0) + (parseFloat(s.sub3)||0);
-                let secCol = '';
-                if (isSixth) {
-                    const secText = s.allocatedSection ? `${s.allocatedSection} (নতুন রোল: ${s.sectionRoll})` : '-';
-                    secCol = `<td style="text-align:center; font-weight:bold;">${secText}</td>`;
-                }
-                return `
-                    <tr>
-                        <td style="text-align:center;"><b>${i + 1}</b></td>
-                        <td style="text-align:center;">${s.formNo}</td>
-                        <td style="text-align:center;">${s.examRoll}</td>
-                        <td><b>${s.nameBn}</b></td>
-                        <td>${s.fatherName}</td>
-                        <td style="text-align:center;"><b>${total}</b></td>
-                        ${secCol}
-                    </tr>
-                `;
+                let secCol = isSixth ? `<td>${s.allocatedSection ? `${s.allocatedSection} (রোল: ${s.sectionRoll})` : '-'}</td>` : '';
+                return `<tr><td style="text-align:center;"><b>${i + 1}</b></td><td style="text-align:center;">${s.formNo}</td><td style="text-align:center;">${s.examRoll || '-'}</td><td><b>${s.nameBn}</b></td><td>${s.fatherName}</td><td style="text-align:center;"><b>${total}</b></td>${secCol}</tr>`;
             }).join('');
 
-            let thSec = isSixth ? '<th>বরাদ্দকৃত শাখা ও শ্রেণি রোল</th>' : '';
-
             triggerPrint(`
-                <div class="print-header">
+                <div style="text-align:center; margin-bottom:15px;">
                     <h2>${settings.schoolName}</h2>
                     <div>${settings.schoolAddress}</div>
-                    <div class="exam-sub">ভর্তি পরীক্ষা - ${settings.session}</div>
-                    <div class="sheet-title">মেধাতালিকা (${cls})</div>
+                    <div style="font-size:15px; font-weight:bold; margin-top:4px;">মেধাতালিকা (${cls}) - শিক্ষাবর্ষ ${settings.session}</div>
                 </div>
                 <table class="print-table">
-                    <thead>
-                        <tr>
-                            <th>মেধাক্রম</th>
-                            <th>ফর্ম নং</th>
-                            <th>ভর্তি রোল</th>
-                            <th>শিক্ষার্থীর নাম</th>
-                            <th>পিতার নাম</th>
-                            <th>প্রাপ্ত নম্বর</th>
-                            ${thSec}
-                        </tr>
-                    </thead>
+                    <thead><tr><th>মেধাক্রম</th><th>ফরম নং</th><th>রোল</th><th>শিক্ষার্থীর নাম</th><th>পিতার নাম</th><th>প্রাপ্ত নম্বর</th>${isSixth ? '<th>শাখা ও রোল</th>' : ''}</tr></thead>
                     <tbody>${rows}</tbody>
                 </table>
-                <div style="display:flex; justify-content:flex-end; margin-top:50px; font-size:13px;">
-                    <div class="sign-line">প্রধান শিক্ষকের স্বাক্ষর ও সিল</div>
-                </div>
+                <div style="display:flex; justify-content:flex-end; margin-top:50px;"><div class="sign-line">প্রধান শিক্ষকের স্বাক্ষর</div></div>
             `);
         }
 
         function exportCSV() {
-            if (students.length === 0) return alert('কোনো ডেটা নেই!');
-            let csv = '\uFEFFফর্ম নং,পরীক্ষার রোল,শ্রেণি,নাম (বাংলা),নাম (ইংরেজি),পিতার নাম,মাতার নাম,জন্ম তারিখ,জন্ম নিবন্ধন,মোবাইল,বাংলা,ইংরেজি,গণিত,বরাদ্দকৃত শাখা,শ্রেণি রোল\n';
+            let csv = '\uFEFFফরম নং,রোল,শ্রেণি,নাম,পিতা,মোবাইল,ফি স্ট্যাটাস,জন্ম তারিখ,ঠিকানা\n';
             students.forEach(s => {
-                csv += `"${s.formNo}","${s.examRoll}","${s.targetClass}","${s.nameBn}","${s.nameEn}","${s.fatherName}","${s.motherName}","${s.dob}","'${s.birthReg}","${s.phone}","${s.sub1}","${s.sub2}","${s.sub3}","${s.allocatedSection || ''}","${s.sectionRoll || ''}"\n`;
+                csv += `"${s.formNo}","${s.examRoll || ''}","${s.targetClass}","${s.nameBn}","${s.fatherName}","${s.fatherPhone}","${s.isPaid ? 'Paid' : 'Unpaid'}","${s.dob}","${s.currAddress}"\n`;
             });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Admission_Data_${settings.session}.csv`;
+            link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+            link.download = `Admission_List_${settings.session}.csv`;
             link.click();
         }
 
         function backupJSON() {
-            const blob = new Blob([JSON.stringify({settings, students}, null, 2)], { type: 'application/json' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href = URL.createObjectURL(new Blob([JSON.stringify({settings, students}, null, 2)], { type: 'application/json' }));
             link.download = `School_Admission_Backup_${settings.session}.json`;
             link.click();
         }
 
-        function restoreJSON(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const data = JSON.parse(evt.target.result);
-                    if (data.students) students = data.students;
-                    if (data.settings) settings = data.settings;
-                    localStorage.setItem('admission_students', JSON.stringify(students));
-                    localStorage.setItem('admission_settings', JSON.stringify(settings));
-                    applySettingsToUI();
-                    updateDashboard();
-                    renderStudentTable();
-                    alert('ডাটা সফলভাবে রিস্টোর হয়েছে!');
-                } catch (err) {
-                    alert('সঠিক ব্যাকআপ ফাইল নির্বাচন করুন!');
-                }
-            };
-            reader.readAsText(file);
-        }
-
         function clearAllData() {
-            if (!confirm('সতর্কতা: সব ডাটা চিরতরে মুছে যাবে! আপনি কি নিশ্চিত?')) return;
-            students = [];
-            localStorage.removeItem('admission_students');
-            updateDashboard();
-            renderStudentTable();
+            if (!confirm('সব ডাটা মুছে ফেলবেন?')) return;
+            students = []; localStorage.removeItem('admission_students');
+            updateDashboard(); renderStudentTable();
         }
     </script>
 </body>
