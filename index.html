@@ -156,20 +156,44 @@
         .notice-text {
             font-size: 14.5px;
             color: #f8fafc;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             line-height: 1.6;
             text-align: justify;
         }
 
         .notice-text b { color: #fde68a; }
 
+        /* Highlighted Exam Date Banner */
+        .exam-date-highlight {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 10px 16px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .exam-date-highlight span {
+            color: #fde68a;
+            font-size: 17px;
+        }
+
         .countdown-timer {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
+            flex-wrap: wrap;
             font-weight: 700;
             font-size: 14px;
             color: #cbd5e1;
+            align-items: center;
         }
 
         .countdown-item {
@@ -553,8 +577,14 @@
 
             <div class="notice-countdown-box">
                 <div class="notice-text">
-                    📢 <b>ভর্তি বিজ্ঞপ্তি ২০২৭:</b> ৬ষ্ঠ, ৭ম, ৮ম ও ৯ম শ্রেণীতে ভর্তির জন্য ফরম বিতরণ ও জমা চলবে <b>১০/১১/২০২৬ থেকে ১৩/১২/২০২৬ পর্যন্ত</b> (ছুটির দিন ব্যতীত, সকাল ১০টা থেকে বিকাল ৪টা)। নির্ধারিত তারিখের মধ্যে অনলাইনে ফরম পূরণপূর্বক প্রিন্ট করে বিদ্যালয়ে জমা দিন[cite: 10]। ভর্তি পরীক্ষা: <b>১৭/১২/২০২৬</b>[cite: 10]।
+                    📢 <b>ভর্তি বিজ্ঞপ্তি ২০২৭:</b> ৬ষ্ঠ, ৭ম, ৮ম ও ৯ম শ্রেণীতে ভর্তির জন্য ফরম বিতরণ ও জমা চলবে <b>১০/১১/২০২৬ থেকে ১৩/১২/২০২৬ পর্যন্ত</b> (ছুটির দিন ব্যতীত, সকাল ১০টা থেকে বিকাল ৪টা)। নির্ধারিত তারিখের মধ্যে অনলাইনে ফরম পূরণপূর্বক প্রিন্ট করে বিদ্যালয়ে জমা দিন।
                 </div>
+
+                <!-- Highlighted Exam Date Banner -->
+                <div class="exam-date-highlight">
+                    <i class="fa-solid fa-calendar-days"></i> ভর্তি পরীক্ষার তারিখ: <span>১৭ ডিসেম্বর ২০২৬</span>
+                </div>
+
                 <div class="countdown-timer" id="countdown-clock">
                     <span>সময়সীমা গণনা চলছে...</span>
                 </div>
@@ -582,7 +612,7 @@
                     </button>
                 </div>
                 <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; background: #fffbeb; padding: 10px; border-left: 4px solid var(--gold); border-radius: 4px;">
-                    নির্দেশনা: নিচের ফরমটি সঠিকভাবে পূরণ করুন। (ফরম নম্বর খালি রাখলে সিস্টেম থেকে অটোমেটিক নম্বর তৈরি হয়ে যাবে)। সাবমিট করার পর ফরমটি প্রিন্ট করে বিদ্যালয়ে এসে ফি জমা দিয়ে প্রবেশপত্র সংগ্রহ করুন[cite: 10]।
+                    নির্দেশনা: নিচের ফরমটি সঠিকভাবে পূরণ করুন। (ফরম নম্বর খালি রাখলে সিস্টেম থেকে অটোমেটিক নম্বর তৈরি হয়ে যাবে)। সাবমিট করার পর ফরমটি প্রিন্ট করে বিদ্যালয়ে এসে ফি জমা দিয়ে প্রবেশপত্র সংগ্রহ করুন।
                 </p>
 
                 <form id="pub-student-form" onsubmit="submitPublicForm(event)">
@@ -979,7 +1009,15 @@
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById("countdown-clock").innerHTML = `⏳ সময় বাকি: <span class="countdown-item">${days} দিন</span> <span class="countdown-item">${hours} ঘন্টা</span> <span class="countdown-item">${minutes} মিনিট</span>`;
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("countdown-clock").innerHTML = `
+                    ⏳ সময় বাকি: 
+                    <span class="countdown-item">${days} দিন</span> 
+                    <span class="countdown-item">${hours} ঘন্টা</span> 
+                    <span class="countdown-item">${minutes} মিনিট</span> 
+                    <span class="countdown-item">${seconds} সেকেন্ড</span>
+                `;
             }, 1000);
         }
 
