@@ -937,7 +937,6 @@
                             <div class="form-group"><label>ভর্তি পরীক্ষার ফরম ফি *</label><input type="text" id="cfg-admission-fee" required placeholder="যেমন: ৫০০ টাকা"></div>
                             <div class="form-group"><label>পরীক্ষার তারিখ</label><input type="text" id="cfg-exam-date"></div>
                             <div class="form-group"><label>পরীক্ষার সময়</label><input type="text" id="cfg-exam-time"></div>
-                            <div class="form-group"><label>এডমিন পাসওয়ার্ড</label><input type="text" id="cfg-admin-pass" required></div>
                         </div>
                         <div style="margin-top: 20px;"><button type="submit" class="btn btn-primary">সেটিংস সেভ করুন</button></div>
                     </form>
@@ -959,11 +958,11 @@
             <form onsubmit="handleAdminLogin(event)">
                 <div class="form-group" style="text-align: left; margin-bottom: 16px;">
                     <label>পাসওয়ার্ড দিন</label>
-                    <input type="password" id="login-password-input" required placeholder="ডিফল্ট: admin123">
+                    <input type="password" id="login-password-input" required placeholder="গোপন পাসওয়ার্ড দিন">
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button type="button" class="btn btn-outline" style="flex: 1;" onclick="closeLoginModal()">বাতিল</button>
-                    <button type="submit" class="btn btn-primary" style="flex: 1;">প্রবেশ</button>
+                    <button type="submit" id="login-btn" class="btn btn-primary" style="flex: 1;">প্রবেশ</button>
                 </div>
             </form>
         </div>
@@ -984,7 +983,6 @@
             admissionFee: '৫০০ টাকা',
             examDate: '১৭ ডিসেম্বর ২০২৬',
             examTime: 'সকাল ১০:০০ ঘটিকা',
-            adminPass: 'admin123',
             customLogo: ''
         };
 
@@ -1030,12 +1028,51 @@
         function openLoginModal() { document.getElementById('login-modal').classList.add('show'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
 
+        // Secure Login via Google Apps Script
         function handleAdminLogin(e) {
             e.preventDefault();
-            if (document.getElementById('login-password-input').value === (settings.adminPass || 'admin123')) {
-                isAdmin = true; sessionStorage.setItem('is_school_admin', 'true');
-                closeLoginModal(); updateAuthUI(); switchTab('dashboard', null);
-            } else { alert('ভুল পাসওয়ার্ড!'); }
+            const passInput = document.getElementById('login-password-input').value;
+            const loginBtn = document.getElementById('login-btn');
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = 'যাচাই হচ্ছে...';
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: "checkPassword", password: passInput })
+            })
+            .then(() => {
+                // যেহেতু no-cors মোডে রেসপন্স সরাসরি রিড করা যায় না, তাই আমরা গুগল শিট থেকে একটি সুনির্দিষ্ট সিস্টেমে বা নিরাপদ উপায়ে এটি করছি।
+                // অথবা নিরাপদভাবে সরাসরি যাচাই করার জন্য নিচের ফেস ফেচ মেথড কাজ করছে:
+            })
+            .catch(err => console.error(err));
+
+            // আধুনিক ও সিওর মেথডের জন্য নিচের ফেচ কোডটি ব্যবহার করা হচ্ছে:
+            fetch(SCRIPT_URL + "?action=checkPassword&password=" + encodeURIComponent(passInput))
+            .then(res => res.json())
+            .then(data => {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = 'প্রবেশ';
+
+                if (data.status === "success") {
+                    isAdmin = true;
+                    sessionStorage.setItem('is_school_admin', 'true');
+                    closeLoginModal();
+                    document.getElementById('login-password-input').value = '';
+                    updateAuthUI();
+                    switchTab('dashboard', null);
+                } else {
+                    alert('ভুল পাসওয়ার্ড! প্রবেশাধিকার সংরক্ষিত।');
+                }
+            })
+            .catch(() => {
+                // ফেইলব্যাক সিকিউরিটি চেক
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = 'প্রবেশ';
+                alert('সার্ভার কানেকশন ত্রুটি। দয়া করে আবার চেষ্টা করুন।');
+            });
         }
 
         function logoutAdmin() { isAdmin = false; sessionStorage.removeItem('is_school_admin'); updateAuthUI(); }
@@ -1074,7 +1111,6 @@
             document.getElementById('cfg-admission-fee').value = settings.admissionFee;
             document.getElementById('cfg-exam-date').value = settings.examDate;
             document.getElementById('cfg-exam-time').value = settings.examTime;
-            document.getElementById('cfg-admin-pass').value = settings.adminPass || 'admin123';
         }
 
         function saveSettings(e) {
@@ -1086,7 +1122,6 @@
             settings.admissionFee = document.getElementById('cfg-admission-fee').value.trim();
             settings.examDate = document.getElementById('cfg-exam-date').value.trim();
             settings.examTime = document.getElementById('cfg-exam-time').value.trim();
-            settings.adminPass = document.getElementById('cfg-admin-pass').value.trim() || 'admin123';
             localStorage.setItem('admission_settings', JSON.stringify(settings));
             applySettingsToUI(); alert('সেটিংস সংরক্ষিত হয়েছে!');
         }
@@ -1125,11 +1160,9 @@
                 sub1: '', sub2: '', sub3: '', allocatedSection: '', sectionRoll: ''
             };
 
-            // Local save
             students.push(student);
             localStorage.setItem('admission_students', JSON.stringify(students));
 
-            // Send to Google Sheets via Apps Script
             const submitBtn = document.getElementById('submit-btn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ডাটা সেভ হচ্ছে...';
