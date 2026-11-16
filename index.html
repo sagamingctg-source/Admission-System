@@ -973,7 +973,7 @@
 
     <script>
         // Google Apps Script Web App URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxB64hGVNx2Q7BiccTvQhSlctQN4E0htbKVNt3xFDWP_qUK9fG-SupGl0FVdniqZ-4Qcw/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhIN2TdNjQb3nTx39zuaSjZVttNYQdR0MNTVFeiqxqYAN19fBl1SmKerjEvTR63BrV/exec";
 
         let students = JSON.parse(localStorage.getItem('admission_students')) || [];
         let settings = JSON.parse(localStorage.getItem('admission_settings')) || {
@@ -994,7 +994,7 @@
             updateAuthUI();
             startCountdown();
             if (isAdmin) { 
-                syncDataFromSheet(); // লগইন করার পর শিট থেকে অটো সিঙ্ক হবে
+                syncDataFromSheet(); 
             }
         };
 
@@ -1031,7 +1031,6 @@
         function openLoginModal() { document.getElementById('login-modal').classList.add('show'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
 
-        // Google Apps Script এর সাথে পাসওয়ার্ড চেক ও লগইন
         function handleAdminLogin(e) {
             e.preventDefault();
             const passInput = document.getElementById('login-password-input').value;
@@ -1088,6 +1087,7 @@
             document.getElementById('hero-school-name').innerText = settings.schoolName;
             document.getElementById('hero-estd').innerText = settings.estd;
             document.getElementById('hero-address').innerHTML = `<i class="fa-solid fa-location-dot" style="color: #fca5a5;"></i> ${settings.schoolAddress}`;
+            document.getElementById('hero-exam-date').innerText = settings.examDate;
             document.getElementById('sidebar-school-name').innerText = settings.schoolName;
             document.getElementById('admin-header-school').innerText = settings.schoolName;
             document.getElementById('admin-header-addr').innerText = settings.schoolAddress;
@@ -1117,18 +1117,36 @@
             applySettingsToUI(); alert('সেটিংস সফলভাবে সংরক্ষিত ও আপডেট হয়েছে!');
         }
 
-        // গুগল শিট থেকে সকল আবেদনকারীর ডাটা সিঙ্ক করার ফাংশন
+        // গুগল শিট থেকে সকল আবেদনকারীর ডাটা সিঙ্ক করার ফাংশন (লোকাল পেইড ও রোল ডাটা সংরক্ষিত রেখে)
         function syncDataFromSheet() {
             fetch(SCRIPT_URL + "?action=getData")
             .then(res => res.json())
             .then(data => {
-                if(data && data.students) {
-                    students = data.students;
+                if (data && data.students) {
+                    const localMap = {};
+                    students.forEach(st => { localMap[st.formNo] = st; });
+
+                    students = data.students.map(remoteSt => {
+                        const localSt = localMap[remoteSt.formNo];
+                        if (localSt) {
+                            return {
+                                ...remoteSt,
+                                isPaid: remoteSt.isPaid || localSt.isPaid,
+                                examRoll: remoteSt.examRoll || localSt.examRoll,
+                                sub1: localSt.sub1 || '',
+                                sub2: localSt.sub2 || '',
+                                sub3: localSt.sub3 || '',
+                                allocatedSection: localSt.allocatedSection || '',
+                                sectionRoll: localSt.sectionRoll || ''
+                            };
+                        }
+                        return remoteSt;
+                    });
+
                     localStorage.setItem('admission_students', JSON.stringify(students));
                     updateDashboard();
                     renderStudentTable();
                     renderResultTable();
-                    alert('গুগল শিট থেকে সফলভাবে ডাটা সিঙ্ক করা হয়েছে!');
                 }
             })
             .catch(err => {
@@ -1147,7 +1165,7 @@
                 id: Date.now().toString(),
                 formNo: formNoInput,
                 examRoll: '', 
-                isPaid: false, 
+                isPaid: false, // সব ফরম ডিফল্ট আনপেইড হিসেবে সেভ হবে
                 targetClass: document.getElementById('pub-targetClass').value,
                 nameBn: document.getElementById('pub-nameBn').value.trim(),
                 nameEn: document.getElementById('pub-nameEn').value.trim(),
@@ -1204,40 +1222,93 @@
 
         function resetPublicForm() { document.getElementById('pub-student-form').reset(); }
 
-        function togglePaymentStatus(id) {
+        // শ্রেণি অনুযায়ী পরবর্তী ফাঁকা রোল নম্বর বের করার ফাংশন
+        function getNextAvailableRoll(cls) {
+            let base = 1000;
+            if (cls.includes('২য়')) base = 2000;
+            else if (cls.includes('৩য়')) base = 3000;
+            else if (cls.includes('৪র্থ')) base = 4000;
+            else if (cls.includes('৫ম')) base = 5000;
+            else if (cls.includes('৬ষ্ঠ')) base = 6000;
+            else if (cls.includes('৭ম')) base = 7000;
+            else if (cls.includes('৮ম')) base = 8000;
+            else if (cls.includes('৯ম')) base = 9000;
+
+            let maxRoll = base;
+            students.forEach(st => {
+                if (st.targetClass === cls && st.examRoll) {
+                    const num = parseInt(st.examRoll, 10);
+                    if (!isNaN(num) && num > maxRoll) {
+                        maxRoll = num;
+                    }
+                }
+            });
+            return (maxRoll + 1).toString();
+        }
+
+        // ওয়ান-ওয়ে পেইড লক ও অটো রোল জেনারেটর ফাংশন
+        function confirmPaymentAndAssignRoll(id) {
             const s = students.find(st => st.id === id);
-            if (s) {
-                s.isPaid = !s.isPaid;
-                localStorage.setItem('admission_students', JSON.stringify(students));
-                renderStudentTable();
-                updateDashboard();
+            if (!s) return;
+
+            // একবার পেইড হয়ে গেলে আর আনপেইড করা যাবে না
+            if (s.isPaid) {
+                return;
             }
+
+            if (!confirm(`আপনি কি নিশ্চিত যে "${s.nameBn}" (ফরম নং: ${s.formNo})-এর ফরম ফি পরিশোধিত হয়েছে?\n\nবিঃদ্রঃ পেইড নিশ্চিত করলে এটি স্থায়ীভাবে লক হয়ে যাবে (আর আনপেইড করা যাবে না) এবং সাথে সাথেই ভর্তি পরীক্ষার রোল নম্বর জেনারেট হয়ে যাবে।`)) {
+                return;
+            }
+
+            s.isPaid = true;
+            if (!s.examRoll) {
+                s.examRoll = getNextAvailableRoll(s.targetClass);
+            }
+
+            localStorage.setItem('admission_students', JSON.stringify(students));
+            renderStudentTable();
+            updateDashboard();
+
+            // গুগল শিটেও পেইড ও রোল আপডেট পাঠানো হচ্ছে
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: "updatePaymentAndRoll",
+                    formNo: s.formNo,
+                    examRoll: s.examRoll
+                })
+            }).catch(err => console.error("Sheet update error:", err));
+
+            alert(`ফি পেইড নিশ্চিত হয়েছে এবং লক করা হয়েছে!\nবরাদ্দকৃত ভর্তি পরীক্ষার রোল নম্বর: ${s.examRoll}`);
         }
 
         function autoAssignClassRolls() {
             const classes = ['২য় শ্রেণি', '৩য় শ্রেণি', '৪র্থ শ্রেণি', '৫ম শ্রেণি', '৬ষ্ঠ শ্রেণি', '৭ম শ্রেণি', '৮ম শ্রেণি', '৯ম শ্রেণি'];
+            let assignedCount = 0;
             classes.forEach(cls => {
-                let base = 1000;
-                if (cls.includes('২য়')) base = 2000;
-                else if (cls.includes('৩য়')) base = 3000;
-                else if (cls.includes('৪র্থ')) base = 4000;
-                else if (cls.includes('৫ম')) base = 5000;
-                else if (cls.includes('৬ষ্ঠ')) base = 6000;
-                else if (cls.includes('৭ম')) base = 7000;
-                else if (cls.includes('৮ম')) base = 8000;
-                else if (cls.includes('৯ম')) base = 9000;
-
-                let c = 1;
                 students.forEach(s => {
                     if (s.targetClass === cls && s.isPaid && !s.examRoll) {
-                        s.examRoll = (base + c).toString();
-                        c++;
+                        s.examRoll = getNextAvailableRoll(cls);
+                        assignedCount++;
+                        fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                action: "updatePaymentAndRoll",
+                                formNo: s.formNo,
+                                examRoll: s.examRoll
+                            })
+                        }).catch(() => {});
                     }
                 });
             });
             localStorage.setItem('admission_students', JSON.stringify(students));
             renderStudentTable();
-            alert('ফি পরিশোধিত শিক্ষার্থীদের রোল জেনারেট সম্পন্ন হয়েছে!');
+            updateDashboard();
+            alert(assignedCount > 0 ? 'ফি পরিশোধিত শিক্ষার্থীদের রোল জেনারেট সম্পন্ন হয়েছে!' : 'সকল পেইড শিক্ষার্থীর রোল ইতিমধ্যে বরাদ্দ করা আছে।');
         }
 
         function updateDashboard() {
@@ -1265,8 +1336,8 @@
 
             filtered.forEach(s => {
                 const payBadge = s.isPaid 
-                    ? `<button class="btn btn-success" style="padding:4px 10px; font-size:12px;" onclick="togglePaymentStatus('${s.id}')"><i class="fa-solid fa-check-circle"></i> পেইড (Paid)</button>`
-                    : `<button class="btn btn-warning" style="padding:4px 10px; font-size:12px;" onclick="togglePaymentStatus('${s.id}')"><i class="fa-solid fa-clock"></i> বাকি (Unpaid)</button>`;
+                    ? `<span class="btn btn-success" style="padding:4px 10px; font-size:12px; cursor:not-allowed; opacity:0.95;" title="পেইড নিশ্চিত ও লকড"><i class="fa-solid fa-lock"></i> পেইড (Paid)</span>`
+                    : `<button class="btn btn-warning" style="padding:4px 10px; font-size:12px;" onclick="confirmPaymentAndAssignRoll('${s.id}')" title="ক্লিক করে পেইড ও রোল নিশ্চিত করুন"><i class="fa-solid fa-clock"></i> বাকি (Unpaid)</button>`;
 
                 tbody.innerHTML += `
                     <tr>
