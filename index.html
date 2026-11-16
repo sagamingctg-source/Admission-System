@@ -591,9 +591,6 @@
                 <button class="btn-hero-primary" onclick="togglePublicForm(true)">
                     <i class="fa-solid fa-file-pen"></i> অনলাইন ভর্তি ফরম পূরণ করুন
                 </button>
-                <button class="btn-hero-admin" onclick="openLoginModal()">
-                    <i class="fa-solid fa-user-shield"></i> অফিস / এডমিন প্যানেল
-                </button>
             </div>
         </div>
 
@@ -1117,7 +1114,6 @@
             applySettingsToUI(); alert('সেটিংস সফলভাবে সংরক্ষিত ও আপডেট হয়েছে!');
         }
 
-        // গুগল শিট থেকে সকল আবেদনকারীর ডাটা সিঙ্ক করার ফাংশন (লোকাল পেইড ও রোল ডাটা সংরক্ষিত রেখে)
         function syncDataFromSheet() {
             fetch(SCRIPT_URL + "?action=getData")
             .then(res => res.json())
@@ -1165,7 +1161,7 @@
                 id: Date.now().toString(),
                 formNo: formNoInput,
                 examRoll: '', 
-                isPaid: false, // সব ফরম ডিফল্ট আনপেইড হিসেবে সেভ হবে
+                isPaid: false, 
                 targetClass: document.getElementById('pub-targetClass').value,
                 nameBn: document.getElementById('pub-nameBn').value.trim(),
                 nameEn: document.getElementById('pub-nameEn').value.trim(),
@@ -1222,7 +1218,6 @@
 
         function resetPublicForm() { document.getElementById('pub-student-form').reset(); }
 
-        // শ্রেণি অনুযায়ী পরবর্তী ফাঁকা রোল নম্বর বের করার ফাংশন
         function getNextAvailableRoll(cls) {
             let base = 1000;
             if (cls.includes('২য়')) base = 2000;
@@ -1246,12 +1241,10 @@
             return (maxRoll + 1).toString();
         }
 
-        // ওয়ান-ওয়ে পেইড লক ও অটো রোল জেনারেটর ফাংশন
         function confirmPaymentAndAssignRoll(id) {
             const s = students.find(st => st.id === id);
             if (!s) return;
 
-            // একবার পেইড হয়ে গেলে আর আনপেইড করা যাবে না
             if (s.isPaid) {
                 return;
             }
@@ -1269,7 +1262,6 @@
             renderStudentTable();
             updateDashboard();
 
-            // গুগল শিটেও পেইড ও রোল আপডেট পাঠানো হচ্ছে
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
