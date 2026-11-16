@@ -579,7 +579,7 @@
                 </div>
 
                 <div class="exam-date-highlight">
-                    <i class="fa-solid fa-calendar-days"></i> ভর্তি পরীক্ষার তারিখ: <span>১৭ ডিসেম্বর ২০২৬</span>
+                    <i class="fa-solid fa-calendar-days"></i> ভর্তি পরীক্ষার তারিখ: <span id="hero-exam-date">১৭ ডিসেম্বর ২০২৬</span>
                 </div>
 
                 <div class="countdown-timer" id="countdown-clock">
@@ -609,7 +609,7 @@
                     </button>
                 </div>
                 <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; background: #fffbeb; padding: 10px; border-left: 4px solid var(--gold); border-radius: 4px;">
-                    নির্দেশনা: নিচের ফরমটি সঠিকভাবে পূরণ করুন। (ফরম নম্বর খালি রাখলে সিস্টেম থেকে অটোমেটিক নম্বর তৈরি হয়ে যাবে)। সাবমিট করার পর ফরমটি প্রিন্ট করে বিদ্যালয়ে এসে ফি জমা দিয়ে প্রবেশপত্র সংগ্রহ করুন।
+                    নির্দেশনা: নিচের ফরমটি সঠিকভাবে পূরণ করুন। ফরম ফি: <b id="form-fee-display">৫০০ টাকা</b>। সাবমিট করার পর ফরমটি প্রিন্ট করে বিদ্যালয়ে এসে ফি জমা দিয়ে প্রবেশপত্র সংগ্রহ করুন।
                 </p>
 
                 <form id="pub-student-form" onsubmit="submitPublicForm(event)">
@@ -763,6 +763,7 @@
                     <p style="font-size: 13px; color: var(--text-muted);" id="admin-header-addr">ফতেয়াবাদ, হাটহাজারী, চট্টগ্রাম</p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="btn btn-success" onclick="syncDataFromSheet()" style="padding: 7px 14px;"><i class="fa-solid fa-rotate"></i> ডাটা রিফ্রেশ / সিঙ্ক</button>
                     <span style="background: rgba(220,38,38,0.1); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px;" id="admin-session-badge">ভর্তি পরীক্ষা - ২০২৭</span>
                     <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i> লগআউট</button>
                 </div>
@@ -972,7 +973,7 @@
 
     <script>
         // Google Apps Script Web App URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzMVA4cVDmfvJ97ZBHAvfWOnY1PPGx413wdW5JVKwtTc_TF_hWxZtAfagKroQVm9vd6tw/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxB64hGVNx2Q7BiccTvQhSlctQN4E0htbKVNt3xFDWP_qUK9fG-SupGl0FVdniqZ-4Qcw/exec";
 
         let students = JSON.parse(localStorage.getItem('admission_students')) || [];
         let settings = JSON.parse(localStorage.getItem('admission_settings')) || {
@@ -992,7 +993,9 @@
             applySettingsToUI();
             updateAuthUI();
             startCountdown();
-            if (isAdmin) { updateDashboard(); renderStudentTable(); renderResultTable(); }
+            if (isAdmin) { 
+                syncDataFromSheet(); // লগইন করার পর শিট থেকে অটো সিঙ্ক হবে
+            }
         };
 
         function startCountdown() {
@@ -1028,7 +1031,7 @@
         function openLoginModal() { document.getElementById('login-modal').classList.add('show'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
 
-        // Secure Login via Google Apps Script
+        // Google Apps Script এর সাথে পাসওয়ার্ড চেক ও লগইন
         function handleAdminLogin(e) {
             e.preventDefault();
             const passInput = document.getElementById('login-password-input').value;
@@ -1037,19 +1040,6 @@
             loginBtn.disabled = true;
             loginBtn.innerHTML = 'যাচাই হচ্ছে...';
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "checkPassword", password: passInput })
-            })
-            .then(() => {
-                // যেহেতু no-cors মোডে রেসপন্স সরাসরি রিড করা যায় না, তাই আমরা গুগল শিট থেকে একটি সুনির্দিষ্ট সিস্টেমে বা নিরাপদ উপায়ে এটি করছি।
-                // অথবা নিরাপদভাবে সরাসরি যাচাই করার জন্য নিচের ফেস ফেচ মেথড কাজ করছে:
-            })
-            .catch(err => console.error(err));
-
-            // আধুনিক ও সিওর মেথডের জন্য নিচের ফেচ কোডটি ব্যবহার করা হচ্ছে:
             fetch(SCRIPT_URL + "?action=checkPassword&password=" + encodeURIComponent(passInput))
             .then(res => res.json())
             .then(data => {
@@ -1063,12 +1053,12 @@
                     document.getElementById('login-password-input').value = '';
                     updateAuthUI();
                     switchTab('dashboard', null);
+                    syncDataFromSheet();
                 } else {
                     alert('ভুল পাসওয়ার্ড! প্রবেশাধিকার সংরক্ষিত।');
                 }
             })
             .catch(() => {
-                // ফেইলব্যাক সিকিউরিটি চেক
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = 'প্রবেশ';
                 alert('সার্ভার কানেকশন ত্রুটি। দয়া করে আবার চেষ্টা করুন।');
@@ -1102,6 +1092,7 @@
             document.getElementById('admin-header-school').innerText = settings.schoolName;
             document.getElementById('admin-header-addr').innerText = settings.schoolAddress;
             document.getElementById('stat-fee').innerText = settings.admissionFee;
+            document.getElementById('form-fee-display').innerText = settings.admissionFee;
             document.querySelectorAll('.dyn-session').forEach(el => el.innerText = settings.session);
 
             document.getElementById('cfg-school-name').value = settings.schoolName;
@@ -1123,7 +1114,26 @@
             settings.examDate = document.getElementById('cfg-exam-date').value.trim();
             settings.examTime = document.getElementById('cfg-exam-time').value.trim();
             localStorage.setItem('admission_settings', JSON.stringify(settings));
-            applySettingsToUI(); alert('সেটিংস সংরক্ষিত হয়েছে!');
+            applySettingsToUI(); alert('সেটিংস সফলভাবে সংরক্ষিত ও আপডেট হয়েছে!');
+        }
+
+        // গুগল শিট থেকে সকল আবেদনকারীর ডাটা সিঙ্ক করার ফাংশন
+        function syncDataFromSheet() {
+            fetch(SCRIPT_URL + "?action=getData")
+            .then(res => res.json())
+            .then(data => {
+                if(data && data.students) {
+                    students = data.students;
+                    localStorage.setItem('admission_students', JSON.stringify(students));
+                    updateDashboard();
+                    renderStudentTable();
+                    renderResultTable();
+                    alert('গুগল শিট থেকে সফলভাবে ডাটা সিঙ্ক করা হয়েছে!');
+                }
+            })
+            .catch(err => {
+                console.error("Sync error:", err);
+            });
         }
 
         function submitPublicForm(e) {
